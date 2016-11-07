@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         addControls();
         addEvents();
-        readData();
+//        readData();
     }
 
     private void addEvents() {
