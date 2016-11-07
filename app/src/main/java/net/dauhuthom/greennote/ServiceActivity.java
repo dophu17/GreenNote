@@ -25,7 +25,7 @@ public class ServiceActivity extends AppCompatActivity {
     ArrayList<Service> list;
     AdapterService adapter;
 
-    Button btnAddService;
+    Button btnAddService, btnBack;
     ListView lvService;
 
     @Override
@@ -47,6 +47,14 @@ public class ServiceActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //back
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
         //update
         lvService.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -60,6 +68,7 @@ public class ServiceActivity extends AppCompatActivity {
 
     private void addControls() {
         btnAddService = (Button) findViewById(R.id.btnAddService);
+        btnBack = (Button) findViewById(R.id.btnBack);
         lvService = (ListView) findViewById(R.id.lvService);
         list = new ArrayList<>();
         adapter = new AdapterService(this, list);

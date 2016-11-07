@@ -23,6 +23,12 @@
             android:id="@+id/btnEdit"
             android:layout_weight="0.04" />
 
+        <Button
+            android:text="Delete"
+            android:layout_width="75dp"
+            android:layout_height="36dp"
+            android:id="@+id/btnDelete" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -3,6 +3,8 @@ package net.dauhuthom.greennote;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import java.util.zip.Inflater;
 public class AdapterService extends BaseAdapter {
     Activity context;
     ArrayList<Service> list;
+    final String DATABASE_NAME = "GreenNote.sqlite";
 
     public AdapterService(Activity context, ArrayList<Service> list) {
         this.context = context;
@@ -47,6 +50,7 @@ public class AdapterService extends BaseAdapter {
         View row = layoutInflater.inflate(R.layout.lv_row_service, null);
         TextView tvName = (TextView) row.findViewById(R.id.tvName);
         Button btnEdit = (Button) row.findViewById(R.id.btnEdit);
+        Button btnDelete = (Button) row.findViewById(R.id.btnDelete);
 
         final Service service = list.get(i);
         tvName.setText(service.name);
@@ -59,7 +63,26 @@ public class AdapterService extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete(service.id);
+            }
+        });
 
         return row;
+    }
+
+    private void delete(int idService) {
+        SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
+        database.delete("services", "id = ?", new String[]{idService + ""});
+        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        list.clear();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            list.add(new Service(id, name));
+        }
+        notifyDataSetChanged();
     }
 }
