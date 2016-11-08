@@ -54,7 +54,7 @@ public class AdapterNote extends BaseAdapter {
         Button btnDelete = (Button) row.findViewById(R.id.btnDelete);
 
         final Note note = list.get(i);
-        tvName.setText(note.service_id);
+        tvName.setText(note.service_id + "");
         tvPrice.setText(note.price + "VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -68,26 +68,26 @@ public class AdapterNote extends BaseAdapter {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                delete(note.id);
+                delete(note.id);
             }
         });
 
         return row;
     }
 
-//    private void delete(int idNote) {
-//        SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
-//        database.delete("notes", "id = ?", new String[]{idNote + ""});
-//        Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
-//        list.clear();
-//        while (cursor.moveToNext()) {
-//            int id = cursor.getInt(0);
-//            int service_id = cursor.getInt(1);
-//            double price = cursor.getDouble(2);
-//            String date = cursor.getString(3);
-//            String description = cursor.getString(4);
-//            list.add(new Note(id, service_id, price, date, description));
-//        }
-//        notifyDataSetChanged();
-//    }
+    private void delete(int idNote) {
+        SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
+        database.delete("notes", "id = ?", new String[]{idNote + ""});
+        Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
+        list.clear();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int service_id = cursor.getInt(1);
+            double price = cursor.getDouble(2);
+            String date = cursor.getString(3);
+            String description = cursor.getString(4);
+            list.add(new Note(id, service_id, price, date, description));
+        }
+        notifyDataSetChanged();
+    }
 }

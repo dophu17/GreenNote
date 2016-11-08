@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Note> list;
     AdapterNote adapter;
 
-    Button btnToService;
+    Button btnToService, btnAddNote;
     ListView lvNote;
 
     @Override
@@ -29,14 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
-        cursor.moveToFirst();
-        Toast.makeText(this, cursor.getString(1), Toast.LENGTH_LONG).show();
-
         addControls();
         addEvents();
-//        readData();
+        readData();
     }
 
     private void addEvents() {
@@ -47,10 +42,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addControls() {
         btnToService = (Button) findViewById(R.id.btnToService);
+        btnAddNote = (Button) findViewById(R.id.btnAddNote);
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
         adapter = new AdapterNote(this, list);
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void readData() {
         database = Database.initDatabase(this, DATABASE_NAME);
+        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
         Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
         list.clear();
         while (cursor.moveToNext()) {

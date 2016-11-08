@@ -77,6 +77,7 @@ public class ServiceActivity extends AppCompatActivity {
 
     public void readData() {
         database = Database.initDatabase(this, DATABASE_NAME);
+        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
         Cursor cursor = database.rawQuery("SELECT * FROM services", null);
         list.clear();
         while (cursor.moveToNext()) {
