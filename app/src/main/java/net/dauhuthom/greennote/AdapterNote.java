@@ -54,13 +54,13 @@ public class AdapterNote extends BaseAdapter {
         Button btnDelete = (Button) row.findViewById(R.id.btnDelete);
 
         final Note note = list.get(i);
-        tvName.setText(note.service_id + "");
+        tvName.setText(note.service_name);
         tvPrice.setText(note.price + "VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, EditServiceActivity.class);
+                Intent intent = new Intent(context, EditNoteActivity.class);
                 intent.putExtra("id", note.id);
                 context.startActivity(intent);
             }
@@ -86,7 +86,8 @@ public class AdapterNote extends BaseAdapter {
             double price = cursor.getDouble(2);
             String date = cursor.getString(3);
             String description = cursor.getString(4);
-            list.add(new Note(id, service_id, price, date, description));
+            String service_name = "";
+            list.add(new Note(id, service_id, price, date, description, service_name));
         }
         notifyDataSetChanged();
     }

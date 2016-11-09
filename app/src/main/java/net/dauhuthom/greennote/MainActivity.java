@@ -63,15 +63,16 @@ public class MainActivity extends AppCompatActivity {
     public void readData() {
         database = Database.initDatabase(this, DATABASE_NAME);
         database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
-        Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
+        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
-            int service_id = cursor.getInt(1);
-            double price = cursor.getDouble(2);
+            int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
+            double price = cursor.getDouble(cursor.getColumnIndex("price"));
             String date = cursor.getString(3);
             String description = cursor.getString(4);
-            list.add(new Note(id, service_id, price, date, description));
+            String service_name = cursor.getString(cursor.getColumnIndex("name"));
+            list.add(new Note(id, service_id, price, date, description, service_name));
         }
         adapter.notifyDataSetChanged();
     }
