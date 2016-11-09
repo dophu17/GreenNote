@@ -18,7 +18,7 @@ public class EditNoteActivity extends AppCompatActivity {
     int ServiceID = -1;
 
     EditText etPrice, etDescription, etDate;
-    Button btnSaveService;
+    Button btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", -1);
         database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM services WHERE id = ?", new String[]{id + ""});
+        Cursor cursor = database.rawQuery("SELECT * FROM notes WHERE id = ?", new String[]{id + ""});
         cursor.moveToFirst();
         String price = cursor.getString(cursor.getColumnIndex("price"));
         String description = cursor.getString(cursor.getColumnIndex("description"));
@@ -46,7 +46,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private void addEvents() {
         //insert
-        btnSaveService.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 update();
@@ -58,7 +58,7 @@ public class EditNoteActivity extends AppCompatActivity {
         etPrice = (EditText) findViewById(R.id.etCost);
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDate = (EditText) findViewById(R.id.etDate);
-        btnSaveService = (Button) findViewById(R.id.btnSaveService);
+        btnSave = (Button) findViewById(R.id.btnSave);
     }
 
     private void update() {
@@ -72,8 +72,8 @@ public class EditNoteActivity extends AppCompatActivity {
         contentValues.put("date", date);
 
         database = Database.initDatabase(this, DATABASE_NAME);
-        database.update("services", contentValues, "id = ?", new String[]{id + ""});
-        Intent intent = new Intent(this, ServiceActivity.class);
+        database.update("notes", contentValues, "id = ?", new String[]{id + ""});
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
