@@ -9,16 +9,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     final String DATABASE_NAME = "GreenNote.sqlite";
     SQLiteDatabase database;
+    ArrayList<Service> listService;
+    AdapterSpinnerService adapter;
     int id = -1;
     int ServiceID = -1;
 
     EditText etPrice, etDescription, etDate;
     Button btnSave;
+    Spinner spinnerServiceID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class EditNoteActivity extends AppCompatActivity {
         etPrice.setText(price);
         etDescription.setText(description);
         etDate.setText(date);
+
+        //get service
+
     }
 
     private void addEvents() {
@@ -59,6 +68,23 @@ public class EditNoteActivity extends AppCompatActivity {
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDate = (EditText) findViewById(R.id.etDate);
         btnSave = (Button) findViewById(R.id.btnSave);
+        spinnerServiceID = (Spinner) findViewById(R.id.spinnerServiceID);
+        listService = new ArrayList<>();
+
+        //load service
+        database = Database.initDatabase(this, DATABASE_NAME);
+        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
+        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        listService.clear();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            listService.add(new Service(id, name));
+        }
+        //end load service
+
+        adapter = new AdapterSpinnerService(this, listService);
+        spinnerServiceID.setAdapter(adapter);
     }
 
     private void update() {
