@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,10 +52,32 @@ public class EditNoteActivity extends AppCompatActivity {
         etDate.setText(date);
 
         //get service
+        for (int i = 0; i < adapter.getCount(); i++) {
+//            if (spinnerServiceID.getItemAtPosition(i).equals("khac")) {
+//                spinnerServiceID.setSelection(i);
+//                Toast.makeText(this, spinnerServiceID.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
+//                break;
+//            }
+        }
 
+        Toast.makeText(this, spinnerServiceID.getItemAtPosition(2).toString(), Toast.LENGTH_LONG).show();
+        //spinnerServiceID.setSelection(1);
     }
 
     private void addEvents() {
+        spinnerServiceID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Service service = (Service) adapterView.getItemAtPosition(i);
+                ServiceID = service.id;
+                Toast.makeText(adapterView.getContext(), service.name + "-" + service.id, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         //insert
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +120,7 @@ public class EditNoteActivity extends AppCompatActivity {
         contentValues.put("price", price);
         contentValues.put("description", description);
         contentValues.put("date", date);
+        contentValues.put("service_id", ServiceID);
 
         database = Database.initDatabase(this, DATABASE_NAME);
         database.update("notes", contentValues, "id = ?", new String[]{id + ""});

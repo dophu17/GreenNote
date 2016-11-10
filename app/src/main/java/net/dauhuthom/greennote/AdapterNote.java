@@ -78,7 +78,7 @@ public class AdapterNote extends BaseAdapter {
     private void delete(int idNote) {
         SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
         database.delete("notes", "id = ?", new String[]{idNote + ""});
-        Cursor cursor = database.rawQuery("SELECT * FROM notes", null);
+        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -86,7 +86,7 @@ public class AdapterNote extends BaseAdapter {
             double price = cursor.getDouble(2);
             String date = cursor.getString(3);
             String description = cursor.getString(4);
-            String service_name = "";
+            String service_name = cursor.getString(5);
             list.add(new Note(id, service_id, price, date, description, service_name));
         }
         notifyDataSetChanged();
