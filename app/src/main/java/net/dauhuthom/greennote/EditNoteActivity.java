@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -38,6 +39,30 @@ public class EditNoteActivity extends AppCompatActivity {
         addEvents();
     }
 
+    private void addControls() {
+        etPrice = (EditText) findViewById(R.id.etCost);
+        etDescription = (EditText) findViewById(R.id.etDescription);
+        etDate = (EditText) findViewById(R.id.etDate);
+        btnSave = (Button) findViewById(R.id.btnSave);
+        spinnerServiceID = (Spinner) findViewById(R.id.spinnerServiceID);
+        listService = new ArrayList<>();
+
+        //load service
+        database = Database.initDatabase(this, DATABASE_NAME);
+        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
+        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        listService.clear();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            listService.add(new Service(id, name));
+        }
+        //end load service
+
+        adapter = new AdapterSpinnerService(this, listService);
+        spinnerServiceID.setAdapter(adapter);
+    }
+
     private void initUI() {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", -1);
@@ -52,16 +77,20 @@ public class EditNoteActivity extends AppCompatActivity {
         etDate.setText(date);
 
         //get service
-        for (int i = 0; i < adapter.getCount(); i++) {
-//            if (spinnerServiceID.getItemAtPosition(i).equals("khac")) {
-//                spinnerServiceID.setSelection(i);
-//                Toast.makeText(this, spinnerServiceID.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
-//                break;
-//            }
+        //Service service2 = (Service) spinnerServiceID.getItemAtPosition(1);
+        //Toast.makeText(this, cursor.getInt(cursor.getColumnIndex("service_id")) + "--" + service2.id, Toast.LENGTH_LONG).show();
+        for (int i = 0; i < spinnerServiceID.getCount(); i++) {
+            Service service = (Service) spinnerServiceID.getItemAtPosition(1);
+            Toast.makeText(this, cursor.getInt(cursor.getColumnIndex("service_id")) + "--" + service.id , Toast.LENGTH_LONG).show();
+            String serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id")) + "";
+            String serviceIdList = service.id + "";
+            if (serviceIdNote.equals(serviceIdList)) {
+                spinnerServiceID.setSelection(i);
+                //Toast.makeText(this, spinnerServiceID.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, service.id + "--" + cursor.getInt(cursor.getColumnIndex("service_id")), Toast.LENGTH_LONG).show();
+                //break;
+            }
         }
-
-        Toast.makeText(this, spinnerServiceID.getItemAtPosition(2).toString(), Toast.LENGTH_LONG).show();
-        //spinnerServiceID.setSelection(1);
     }
 
     private void addEvents() {
@@ -85,30 +114,6 @@ public class EditNoteActivity extends AppCompatActivity {
                 update();
             }
         });
-    }
-
-    private void addControls() {
-        etPrice = (EditText) findViewById(R.id.etCost);
-        etDescription = (EditText) findViewById(R.id.etDescription);
-        etDate = (EditText) findViewById(R.id.etDate);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        spinnerServiceID = (Spinner) findViewById(R.id.spinnerServiceID);
-        listService = new ArrayList<>();
-
-        //load service
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
-        listService.clear();
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            listService.add(new Service(id, name));
-        }
-        //end load service
-
-        adapter = new AdapterSpinnerService(this, listService);
-        spinnerServiceID.setAdapter(adapter);
     }
 
     private void update() {
