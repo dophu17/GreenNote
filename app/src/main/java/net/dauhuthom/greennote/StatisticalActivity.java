@@ -53,10 +53,4 @@ public class StatisticalActivity extends AppCompatActivity {
         }
 
     }
-
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date dateNow = new Date();
-        return dateFormat.format(dateNow);
-    }
 }
