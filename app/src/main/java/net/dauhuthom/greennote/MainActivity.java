@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Note> list;
     AdapterNote adapter;
 
-    Button btnToService, btnAddNote;
+    Button btnToService, btnAddNote, btnStatistical;
     ListView lvNote;
 
     @Override
@@ -32,6 +32,16 @@ public class MainActivity extends AppCompatActivity {
         addControls();
         addEvents();
         readData();
+    }
+
+    private void addControls() {
+        btnToService = (Button) findViewById(R.id.btnToService);
+        btnAddNote = (Button) findViewById(R.id.btnAddNote);
+        btnStatistical = (Button) findViewById(R.id.btnStatistical);
+        lvNote = (ListView) findViewById(R.id.lvNote);
+        list = new ArrayList<>();
+        adapter = new AdapterNote(this, list);
+        lvNote.setAdapter(adapter);
     }
 
     private void addEvents() {
@@ -49,15 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void addControls() {
-        btnToService = (Button) findViewById(R.id.btnToService);
-        btnAddNote = (Button) findViewById(R.id.btnAddNote);
-        lvNote = (ListView) findViewById(R.id.lvNote);
-        list = new ArrayList<>();
-        adapter = new AdapterNote(this, list);
-        lvNote.setAdapter(adapter);
+        btnStatistical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StatisticalActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void readData() {

@@ -77,18 +77,13 @@ public class EditNoteActivity extends AppCompatActivity {
         etDate.setText(date);
 
         //get service
-        //Service service2 = (Service) spinnerServiceID.getItemAtPosition(1);
-        //Toast.makeText(this, cursor.getInt(cursor.getColumnIndex("service_id")) + "--" + service2.id, Toast.LENGTH_LONG).show();
+        int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
         for (int i = 0; i < spinnerServiceID.getCount(); i++) {
-            Service service = (Service) spinnerServiceID.getItemAtPosition(1);
-            Toast.makeText(this, cursor.getInt(cursor.getColumnIndex("service_id")) + "--" + service.id , Toast.LENGTH_LONG).show();
-            String serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id")) + "";
-            String serviceIdList = service.id + "";
-            if (serviceIdNote.equals(serviceIdList)) {
+            Service service = (Service) spinnerServiceID.getItemAtPosition(i);
+            int serviceIdList = service.id;
+            if (serviceIdNote == serviceIdList) {
                 spinnerServiceID.setSelection(i);
-                //Toast.makeText(this, spinnerServiceID.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(this, service.id + "--" + cursor.getInt(cursor.getColumnIndex("service_id")), Toast.LENGTH_LONG).show();
-                //break;
+                break;
             }
         }
     }

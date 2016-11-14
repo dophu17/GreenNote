@@ -1,7 +1,9 @@
 package net.dauhuthom.greennote;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -68,7 +70,23 @@ public class AdapterNote extends BaseAdapter {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delete(note.id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setIcon(android.R.drawable.ic_delete);
+                builder.setTitle("Delete");
+                builder.setMessage("Are you sure delete this note?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        delete(note.id);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.create().show();
             }
         });
 

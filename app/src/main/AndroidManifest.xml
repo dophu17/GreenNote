@@ -19,7 +19,8 @@
         <activity android:name=".AddServiceActivity" />
         <activity android:name=".EditServiceActivity" />
         <activity android:name=".AddNoteActivity" />
-        <activity android:name=".EditNoteActivity"></activity>
+        <activity android:name=".EditNoteActivity" />
+        <activity android:name=".StatisticalActivity"></activity>
     </application>
 
 </manifest>

@@ -3,6 +3,33 @@
 
     <item
         is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="53a420cd4f49274db6bd43475f8006ba67ef6bbd">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.0_6e29bdf9de003f70eeb4743104bbdde5435a596b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5e497d60f0cb6ce87c458ac5420a46d0fed49bd0">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.0_83aaee9fc0a4b81293f56f3b4f47e514e8469c39\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0c6d948e6cb9ea6f535d175fb61ba2930719c0e9">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.0_ed24983e39213fbbfcbf0bb4a7a6ed5e7f6221ce\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -27,6 +54,42 @@
         revision="25.0.0"
         sha1="ee5faf4dee5b6a4364bf51587871047dde7c703a">
         <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_cedfa4d48e258f2d252515121efe3943022bacbc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9316e31b028e86c6e2265582325c34a72c18c1ae">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7ca12db965ef50ff1eae38b77623a31b9ec0037f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3b61a70884adaf0be3fc06c70c801e3e6df13133">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_4d91914c223456f27e2d033f58c1a945a6825c8b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d29714cc76b38157e3cbd034c66e1ec808eb4c19">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.0_99c85de51bd146c33975234ba17e58bdda57ce0a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="410228e9779c05cf4ca7a51807c208e9e38d2a7d">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b3ac5b2fdb9086e8a524f925df2e33ab507f7521\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -57,6 +120,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2c18b87079e0999953dca09b020daf24533307fe\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -84,75 +156,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="665d21a8a069c96b4d9e8b434f5096d865b4e261">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_8a2b8aea47bca77e3ec3d727a0f4bbf67a16144f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="53a420cd4f49274db6bd43475f8006ba67ef6bbd">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.0_6e29bdf9de003f70eeb4743104bbdde5435a596b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="77603cd2ab479f7af8227385f2a3a15c04825da9">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7ca12db965ef50ff1eae38b77623a31b9ec0037f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3b61a70884adaf0be3fc06c70c801e3e6df13133">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_4d91914c223456f27e2d033f58c1a945a6825c8b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="d29714cc76b38157e3cbd034c66e1ec808eb4c19">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.0_99c85de51bd146c33975234ba17e58bdda57ce0a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c2ee1b44a58c6c4ef2ea954ff80f8b1808d5e0f2">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b3ac5b2fdb9086e8a524f925df2e33ab507f7521\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2c18b87079e0999953dca09b020daf24533307fe\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="75b1f366ff0bbc78f8b1f7cf0dc82e7c53afef6a">
         <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.0_2c718d501f0fe409717197b2dbfee947a261911a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\design\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26384be22ddc74cfe197ebda9edbc7d1fd8bd537">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.0_7368aa1062fb2f5263b764fe822b05e28187141b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="665d21a8a069c96b4d9e8b434f5096d865b4e261">
+        <dex dex="C:\Users\phu\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_8a2b8aea47bca77e3ec3d727a0f4bbf67a16144f\classes.dex" />
     </item>
 
 </items>
