@@ -20,7 +20,9 @@
         <activity android:name=".EditServiceActivity" />
         <activity android:name=".AddNoteActivity" />
         <activity android:name=".EditNoteActivity" />
-        <activity android:name=".StatisticalActivity"></activity>
+        <activity android:name=".StatisticalActivity" />
+        <activity android:name=".NoteActivity" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
