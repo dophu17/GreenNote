@@ -47,7 +47,7 @@ public class EditNoteActivity extends AppCompatActivity {
         spinnerServiceID = (Spinner) findViewById(R.id.spinnerServiceID);
         listService = new ArrayList<>();
 
-        //load service
+        //load img_service
         database = Database.initDatabase(this, DATABASE_NAME);
         database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
         Cursor cursor = database.rawQuery("SELECT * FROM services", null);
@@ -57,7 +57,7 @@ public class EditNoteActivity extends AppCompatActivity {
             String name = cursor.getString(1);
             listService.add(new Service(id, name));
         }
-        //end load service
+        //end load img_service
 
         adapter = new AdapterSpinnerService(this, listService);
         spinnerServiceID.setAdapter(adapter);
@@ -76,7 +76,7 @@ public class EditNoteActivity extends AppCompatActivity {
         etDescription.setText(description);
         etDate.setText(date);
 
-        //get service
+        //get img_service
         int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
         for (int i = 0; i < spinnerServiceID.getCount(); i++) {
             Service service = (Service) spinnerServiceID.getItemAtPosition(i);

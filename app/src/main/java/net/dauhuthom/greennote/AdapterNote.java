@@ -73,7 +73,7 @@ public class AdapterNote extends BaseAdapter {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setTitle("Delete");
-                builder.setMessage("Are you sure delete this note?");
+                builder.setMessage("Are you sure delete this img_note?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -17,17 +17,17 @@
             android:layout_weight="1" />
 
         <Button
-            android:text="Edit"
-            android:layout_width="52dp"
-            android:layout_height="36dp"
             android:id="@+id/btnEdit"
-            android:layout_weight="0.04" />
+            android:background="@drawable/edit"
+            android:layout_weight="0.04"
+            android:layout_width="38dp"
+            android:layout_height="38dp" />
 
         <Button
-            android:text="Delete"
-            android:layout_width="75dp"
-            android:layout_height="36dp"
-            android:id="@+id/btnDelete" />
+            android:background="@drawable/delete"
+            android:id="@+id/btnDelete"
+            android:layout_width="38dp"
+            android:layout_height="38dp" />
 
     </LinearLayout>
 

@@ -11,19 +11,10 @@
     tools:context="net.dauhuthom.greennote.ServiceActivity">
 
     <Button
-        android:text="Add Service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/add"
         android:id="@+id/btnAddService" />
-
-    <Button
-        android:text="Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBack"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="match_parent"
