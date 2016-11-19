@@ -52,6 +52,7 @@ public class NoteActivity extends AppCompatActivity {
     public void readData() {
         database = Database.initDatabase(this, DATABASE_NAME);
         database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
         Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
         list.clear();
         while (cursor.moveToNext()) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_about"
     android:layout_width="match_parent"
@@ -10,4 +11,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.AboutActivity">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/green_note"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:id="@+id/tvVersion" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvVersion"
+        android:layout_toStartOf="@+id/imageView"
+        android:layout_marginTop="42dp"
+        android:id="@+id/tvAuthor"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAuthor"
+        android:layout_alignLeft="@+id/tvAuthor"
+        android:layout_alignStart="@+id/tvAuthor"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tvWebsite"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWebsite"
+        android:layout_alignLeft="@+id/tvWebsite"
+        android:layout_alignStart="@+id/tvWebsite"
+        android:layout_marginTop="19dp"
+        android:id="@+id/tvCopyright"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
