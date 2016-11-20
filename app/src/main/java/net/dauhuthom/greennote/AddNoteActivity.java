@@ -1,5 +1,6 @@
 package net.dauhuthom.greennote;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,13 +12,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,9 +35,11 @@ public class AddNoteActivity extends AppCompatActivity {
     ArrayList<Service> listService;
     AdapterSpinnerService adapter;
     int ServiceID = -1;
+    Calendar calendar;
+    Date date;
 
-    EditText etCost, etDescription;
-    Button btnSave;
+    EditText etCost, etDescription, etDate;
+    Button btnSave, btnChangeDate;
     Spinner spinnerServiceID;
 
     @Override
@@ -45,32 +51,12 @@ public class AddNoteActivity extends AppCompatActivity {
         addEvents();
     }
 
-    private void addEvents() {
-        spinnerServiceID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Service service = (Service) adapterView.getItemAtPosition(i);
-                ServiceID = service.id;
-                Toast.makeText(adapterView.getContext(), service.name + "-" + service.id, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                insert();
-            }
-        });
-    }
-
     private void addControls() {
         etCost = (EditText) findViewById(R.id.etCost);
         etDescription = (EditText) findViewById(R.id.etDescription);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
+        etDate = (EditText) findViewById(R.id.etDate);
         spinnerServiceID = (Spinner) findViewById(R.id.spinnerServiceID);
         listService = new ArrayList<>();
 
@@ -88,18 +74,73 @@ public class AddNoteActivity extends AppCompatActivity {
 
         adapter = new AdapterSpinnerService(this, listService);
         spinnerServiceID.setAdapter(adapter);
+
+        //date current
+        calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = null;
+        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        String strDate = simpleDateFormat.format(calendar.getTime());
+        etDate.setText(strDate);
+    }
+
+    private void addEvents() {
+        spinnerServiceID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Service service = (Service) adapterView.getItemAtPosition(i);
+                ServiceID = service.id;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insert();
+            }
+        });
+
+        btnChangeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        etDate.setText((i1 + 1) + "-" + i2 + "-" + i);
+                        calendar.set(i, i1, i2);
+                        date = calendar.getTime();
+                    }
+                };
+                String string = etDate.getText() + "";
+                //Lấy ra chuỗi của textView Date
+                String strArrtmp[] = string.split("-");
+                int day = Integer.parseInt(strArrtmp[1]);
+                int month = Integer.parseInt(strArrtmp[0]) - 1;
+                int year = Integer.parseInt(strArrtmp[2]);
+                //Hiển thị ra Dialog
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNoteActivity.this,
+                        onDateSetListener, year, month, day);
+                datePickerDialog.setTitle("Change date");
+                datePickerDialog.show();
+            }
+        });
     }
 
     private void insert() {
         String price = etCost.getText().toString();
         int service_id = ServiceID;
         String description = etDescription.getText().toString();
+        String changeDate = etDate.getText() + "";
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("price", price);
         contentValues.put("service_id", service_id);
         contentValues.put("description", description);
-        contentValues.put("date", getDateTime());
+        contentValues.put("date", formatDate(changeDate));
 
         database = Database.initDatabase(this, DATABASE_NAME);
         database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
@@ -108,10 +149,12 @@ public class AddNoteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date dateNow = new Date();
-        return dateFormat.format(dateNow);
+    private String formatDate(String date) {
+        String strArrtmp[] = date.split("-");
+        int day = Integer.parseInt(strArrtmp[1]);
+        int month = Integer.parseInt(strArrtmp[0]);
+        int year = Integer.parseInt(strArrtmp[2]);
+        return year + "-" + month + "-" + day;
     }
 }
 

@@ -70,34 +70,46 @@
         android:layout_alignLeft="@+id/btnSave"
         android:layout_alignStart="@+id/btnSave" />
 
+    <TextView
+        android:text="Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/etDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:text="Change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnChangeDate"
+        android:layout_below="@+id/etDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
-        android:layout_below="@+id/etDescription"
+        android:id="@+id/etDate"
         android:layout_alignLeft="@+id/etDescription"
         android:layout_alignStart="@+id/etDescription"
-        android:id="@+id/etDate" />
+        android:layout_toLeftOf="@+id/btnChangeDate"
+        android:layout_toStartOf="@+id/btnChangeDate"
+        android:layout_alignBottom="@+id/btnChangeDate"
+        android:layout_below="@+id/etDescription" />
 
     <Button
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="23dp"
         android:id="@+id/btnSave"
         android:layout_below="@+id/etDate"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView5"
-        android:layout_alignBaseline="@+id/etDate"
-        android:layout_alignBottom="@+id/etDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/etDate"
+        android:layout_alignStart="@+id/etDate" />
 
 </RelativeLayout>
