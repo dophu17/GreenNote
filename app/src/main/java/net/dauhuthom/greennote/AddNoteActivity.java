@@ -3,6 +3,7 @@ package net.dauhuthom.greennote;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void addControls() {
         etCost = (EditText) findViewById(R.id.etCost);
+        etCost.addTextChangedListener(new PriceTextWatcher(etCost));
         etDescription = (EditText) findViewById(R.id.etDescription);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
@@ -132,6 +134,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void insert() {
         String price = etCost.getText().toString();
+        price = price.replace(".", "");
         int service_id = ServiceID;
         String description = etDescription.getText().toString();
         String changeDate = etDate.getText() + "";

@@ -71,7 +71,7 @@ public class AdapterService extends BaseAdapter {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setTitle("Delete");
-                builder.setMessage("Are you sure delete this img_service?");
+                builder.setMessage("Are you sure delete this service?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

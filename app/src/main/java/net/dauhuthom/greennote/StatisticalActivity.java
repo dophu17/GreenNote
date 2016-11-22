@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class StatisticalActivity extends AppCompatActivity {
@@ -15,7 +15,7 @@ public class StatisticalActivity extends AppCompatActivity {
     final String DATABASE_NAME = "GreenNote.sqlite";
     SQLiteDatabase database;
 
-    TextView tvToday, tvLastWeek, tvLastMonth;
+    TextView tvToday, tvThisWeek, tvThisMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public class StatisticalActivity extends AppCompatActivity {
 
     private void addControls() {
         tvToday = (TextView) findViewById(R.id.tvToday);
-        tvLastWeek = (TextView) findViewById(R.id.tvLastWeek);
-        tvLastMonth = (TextView) findViewById(R.id.tvLastMonth);
+        tvThisWeek = (TextView) findViewById(R.id.tvThisWeek);
+        tvThisMonth = (TextView) findViewById(R.id.tvThisMonth);
     }
 
     public void readData() {
@@ -39,18 +39,24 @@ public class StatisticalActivity extends AppCompatActivity {
         //today
         Cursor cursor = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date >= date('now', 'localtime')", null);
         if (cursor.moveToFirst()) {
-            tvToday.setText(cursor.getDouble(0) + " VND");
+            tvToday.setText(formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
         }
-        //last week
+        //this week
         Cursor cursorLastWeek = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('now', '-7 days') AND datetime('now', 'localtime')", null);
         if (cursorLastWeek.moveToFirst()) {
-            tvLastWeek.setText(cursorLastWeek.getDouble(0) + " VND");
+            tvThisWeek.setText(formatDecimal(cursorLastWeek.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
         }
-        //last month
+        //this month
         Cursor cursorLastMonth = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN datetime('now', 'start of month') AND datetime('now', 'localtime')", null);
         if (cursorLastMonth.moveToFirst()) {
-            tvLastMonth.setText(cursorLastMonth.getDouble(0) + " VND");
+            tvThisMonth.setText(formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
         }
 
+    }
+
+    private String formatDecimal(double number, String format, Locale locale) {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
+        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
+        return formatter.format(number);
     }
 }

@@ -15,14 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ServiceActivity" />
-        <activity android:name=".AddServiceActivity" />
-        <activity android:name=".EditServiceActivity" />
-        <activity android:name=".AddNoteActivity" />
-        <activity android:name=".EditNoteActivity" />
-        <activity android:name=".StatisticalActivity" />
-        <activity android:name=".NoteActivity" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".ServiceActivity" android:label="@string/service_name" />
+        <activity android:name=".AddServiceActivity" android:label="@string/add_service_name" />
+        <activity android:name=".EditServiceActivity" android:label="@string/edit_service_name" />
+        <activity android:name=".AddNoteActivity" android:label="@string/add_note_name" />
+        <activity android:name=".EditNoteActivity" android:label="@string/edit_note_name" />
+        <activity android:name=".StatisticalActivity" android:label="@string/statistical_name" />
+        <activity android:name=".NoteActivity" android:label="@string/note_name" />
+        <activity android:name=".AboutActivity" android:label="@string/about_name"></activity>
     </application>
 
 </manifest>

@@ -14,7 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by phu on 11/7/2016.
@@ -57,7 +60,7 @@ public class AdapterNote extends BaseAdapter {
 
         final Note note = list.get(i);
         tvName.setText(note.service_name);
-        tvPrice.setText(note.price + "VND");
+        tvPrice.setText(formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +76,7 @@ public class AdapterNote extends BaseAdapter {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setTitle("Delete");
-                builder.setMessage("Are you sure delete this img_note?");
+                builder.setMessage("Are you sure delete this note?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -108,5 +111,11 @@ public class AdapterNote extends BaseAdapter {
             list.add(new Note(id, service_id, price, date, description, service_name));
         }
         notifyDataSetChanged();
+    }
+
+    private String formatDecimal(double number, String format, Locale locale) {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
+        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
+        return formatter.format(number);
     }
 }

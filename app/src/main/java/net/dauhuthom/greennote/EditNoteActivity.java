@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +51,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private void addControls() {
         etPrice = (EditText) findViewById(R.id.etCost);
+        etPrice.addTextChangedListener(new PriceTextWatcher(etPrice));
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDate = (EditText) findViewById(R.id.etDate);
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -85,10 +88,10 @@ public class EditNoteActivity extends AppCompatActivity {
         database = Database.initDatabase(this, DATABASE_NAME);
         Cursor cursor = database.rawQuery("SELECT * FROM notes WHERE id = ?", new String[]{id + ""});
         cursor.moveToFirst();
-        String price = cursor.getString(cursor.getColumnIndex("price"));
+        double price = cursor.getDouble(cursor.getColumnIndex("price"));
         String description = cursor.getString(cursor.getColumnIndex("description"));
         String date = cursor.getString(cursor.getColumnIndex("date"));
-        etPrice.setText(price);
+        etPrice.setText(formatDecimal(price, "###,###,###,###,###", Locale.GERMANY));
         etDescription.setText(description);
         String strArrtmp[] = date.split("-");
         int day = Integer.parseInt(strArrtmp[2]);
@@ -158,6 +161,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private void update() {
         String price = etPrice.getText().toString();
+        price = price.replace(".", "");
         String description = etDescription.getText().toString();
         String changeDate = etDate.getText() + "";
 
@@ -169,7 +173,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
         database = Database.initDatabase(this, DATABASE_NAME);
         database.update("notes", contentValues, "id = ?", new String[]{id + ""});
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NoteActivity.class);
         startActivity(intent);
     }
 
@@ -180,4 +184,12 @@ public class EditNoteActivity extends AppCompatActivity {
         int year = Integer.parseInt(strArrtmp[2]);
         return year + "-" + month + "-" + day;
     }
+
+    private String formatDecimal(double number, String format, Locale locale) {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
+        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
+        return formatter.format(number);
+    }
 }
+
+//http://stackoverflow.com/questions/1739734/using-decimalformat-keeping-extra-zeros

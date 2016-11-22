@@ -18,7 +18,7 @@ public class NoteActivity extends AppCompatActivity {
     ArrayList<Note> list;
     AdapterNote adapter;
 
-    Button btnAddNote;
+    Button btnAddNote, btnBack;
     ListView lvNote;
 
     @Override
@@ -33,6 +33,7 @@ public class NoteActivity extends AppCompatActivity {
 
     private void addControls() {
         btnAddNote = (Button) findViewById(R.id.btnAddNote);
+        btnBack = (Button) findViewById(R.id.btnBack);
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
         adapter = new AdapterNote(this, list);
@@ -44,6 +45,14 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });

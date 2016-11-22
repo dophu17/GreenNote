@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">GreenNote</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="service_name">Service</string>
+    <string name="add_service_name">Add service</string>
+    <string name="edit_service_name">Edit service</string>
+    <string name="note_name">Note</string>
+    <string name="add_note_name">Add note</string>
+    <string name="edit_note_name">Edit note</string>
+    <string name="statistical_name">Statistical</string>
+    <string name="about_name">About</string>
 </resources>

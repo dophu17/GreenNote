@@ -10,17 +10,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.ServiceActivity">
 
-    <Button
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:background="@drawable/add"
-        android:id="@+id/btnAddService" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/btnAddService"
         android:id="@+id/lvService" />
+
+    <Button
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/add"
+        android:id="@+id/btnAddService"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_above="@+id/lvService"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btnBack"
+        android:background="@drawable/back"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
