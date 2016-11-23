@@ -8,8 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -17,9 +22,12 @@ public class NoteActivity extends AppCompatActivity {
     SQLiteDatabase database;
     ArrayList<Note> list;
     AdapterNote adapter;
+    Calendar calendar;
+    Date date;
 
     Button btnAddNote, btnBack;
     ListView lvNote;
+    TextView tvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,14 @@ public class NoteActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new AdapterNote(this, list);
         lvNote.setAdapter(adapter);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+
+        //date current
+        calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = null;
+        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        String strDate = simpleDateFormat.format(calendar.getTime());
+        tvDate.setText(strDate);
     }
 
     private void addEvents() {
@@ -62,7 +78,7 @@ public class NoteActivity extends AppCompatActivity {
         database = Database.initDatabase(this, DATABASE_NAME);
         database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
         database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
+        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

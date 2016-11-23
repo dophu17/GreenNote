@@ -38,4 +38,14 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/btnBack" />
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate"
+        android:layout_alignBaseline="@+id/btnAddNote"
+        android:layout_alignBottom="@+id/btnAddNote"
+        android:textColor="#000"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

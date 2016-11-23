@@ -99,7 +99,7 @@ public class AdapterNote extends BaseAdapter {
     private void delete(int idNote) {
         SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
         database.delete("notes", "id = ?", new String[]{idNote + ""});
-        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
+        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

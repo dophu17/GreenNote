@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_statistical"
     android:layout_width="match_parent"
@@ -8,96 +8,286 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.dauhuthom.greennote.StatisticalActivity"
-    android:orientation="vertical">
+    tools:context="net.dauhuthom.greennote.StatisticalActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:gravity="right">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:text="11-23-2016"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
+            android:layout_column="1"
+            android:paddingTop="10dp"
+            android:id="@+id/tvChangeDate" />
 
-            <TextView
-                android:text="Today:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView6"
-                android:layout_marginTop="24dp"
-                android:layout_weight="1" />
-        </LinearLayout>
+        <Button
+            android:layout_height="38dp"
+            android:background="@drawable/calendar"
+            android:id="@+id/btnChangeDate"
+            android:layout_gravity="right"
+            android:layout_column="1"
+            android:layout_width="38dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <TextView
+            android:text="Day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:textColor="#000"
+            android:id="@+id/textView16"
+            android:textAlignment="center" />
+    </TableRow>
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvToday"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Today:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12" />
+
+        <TextView
+            android:text="0 VND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:id="@+id/tvToday" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Yesterday:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView14" />
+
+        <TextView
+            android:text="0 VND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:id="@+id/tvYesterday" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:text="Week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17"
+            android:textAlignment="center"
+            android:textColor="#000"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:text="This week:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView8"
-            android:layout_marginTop="17dp" />
+            android:id="@+id/textView19" />
 
         <TextView
-            android:text="TextView"
+            android:text="0 VND"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:id="@+id/tvThisWeek" />
+    </TableRow>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="41dp">
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Last week:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView21" />
+
+        <TextView
+            android:text="0 VND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:id="@+id/tvLastWeek" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:text="Month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView13"
+            android:textAlignment="center"
+            android:textColor="#000"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:text="This month:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView10"
-            android:layout_marginTop="18dp" />
+            android:id="@+id/textView23" />
 
         <TextView
-            android:text="TextView"
+            android:text="0 VND"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:id="@+id/tvThisMonth" />
+    </TableRow>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000" />
-    </LinearLayout>
+        <TextView
+            android:text="Last month:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView24" />
 
-</LinearLayout>
+        <TextView
+            android:text="0 VND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:id="@+id/tvLastMonth" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWarning"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:text="Warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView26"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Day:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView27" />
+
+        <TextView
+            android:text="Good!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:singleLine="false"
+            android:id="@+id/tvWarningDay" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Week:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView28" />
+
+        <TextView
+            android:text="Good!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:singleLine="false"
+            android:id="@+id/tvWarningWeek" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:text="Month:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView29" />
+
+        <TextView
+            android:text="Good!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:singleLine="false"
+            android:id="@+id/tvWarningMonth" />
+
+    </TableRow>
+</TableLayout>
