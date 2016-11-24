@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -146,18 +148,19 @@ public class AddNoteActivity extends AppCompatActivity {
         contentValues.put("date", formatDate(changeDate));
 
         database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DEFAULT (CURRENT_DATE) , description TEXT)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date DATETIME , description TEXT)");
         database.insert("notes", null, contentValues);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     private String formatDate(String date) {
+        NumberFormat numberFormat = new DecimalFormat("00");
         String strArrtmp[] = date.split("-");
         int day = Integer.parseInt(strArrtmp[1]);
         int month = Integer.parseInt(strArrtmp[0]);
         int year = Integer.parseInt(strArrtmp[2]);
-        return year + "-" + month + "-" + day;
+        return year + "-" + numberFormat.format(month) + "-" + numberFormat.format(day);
     }
 }
 

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,7 +98,7 @@ public class EditNoteActivity extends AppCompatActivity {
         int day = Integer.parseInt(strArrtmp[2]);
         int month = Integer.parseInt(strArrtmp[1]);
         int year = Integer.parseInt(strArrtmp[0]);
-        etDate.setText(month + "-" + day + "-" + year);
+        etDate.setText(date);
 
         //get img_service
         int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -178,11 +179,12 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private String formatDate(String date) {
+        NumberFormat numberFormat = new DecimalFormat("00");
         String strArrtmp[] = date.split("-");
         int day = Integer.parseInt(strArrtmp[1]);
         int month = Integer.parseInt(strArrtmp[0]);
         int year = Integer.parseInt(strArrtmp[2]);
-        return year + "-" + month + "-" + day;
+        return year + "-" + numberFormat.format(month) + "-" + numberFormat.format(day);
     }
 
     private String formatDecimal(double number, String format, Locale locale) {
