@@ -2,6 +2,7 @@ package net.dauhuthom.greennote;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +19,9 @@ import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String DATABASE_NAME = "GreenNote.sqlite";
+    SQLiteDatabase database;
+
     Button btnToService, btnStatistical, btnToNote, btnAbout;
 
     @Override
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         addControls();
         addEvents();
+        insertServiceSimple();
     }
 
     private void addControls() {
@@ -65,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void insertServiceSimple() {
+        String[] serviceName = {
+                "Ăn uống",
+                "Xem phim",
+                "Mua sắm"
+        };
+        ContentValues contentValues = new ContentValues();
+        //contentValues.put("name", name);
+        database = Database.initDatabase(this, DATABASE_NAME);
+        database.insert("services", null, contentValues);
     }
 
     @Override
