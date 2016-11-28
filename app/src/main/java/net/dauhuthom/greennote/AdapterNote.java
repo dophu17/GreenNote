@@ -59,7 +59,7 @@ public class AdapterNote extends BaseAdapter {
 
         final Note note = list.get(i);
         tvName.setText(note.service_name);
-        tvPrice.setText(formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
+        tvPrice.setText(new Function().formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,15 +82,15 @@ public class AdapterNote extends BaseAdapter {
                         NoteDBHelper noteDBHelper = new NoteDBHelper(context);
                         noteDBHelper.delete(note.id);
 
-                        Cursor cursor = noteDBHelper.getAll();
+                        Cursor cursor = noteDBHelper.getAllJoin();
                         list.clear();
                         while (cursor.moveToNext()) {
-                            int id = cursor.getInt(0);
-                            int service_id = cursor.getInt(1);
-                            double price = cursor.getDouble(2);
-                            String date = cursor.getString(3);
-                            String description = cursor.getString(4);
-                            String service_name = cursor.getString(5);
+                            int id = cursor.getInt(cursor.getColumnIndex("id"));
+                            int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
+                            double price = cursor.getDouble(cursor.getColumnIndex("price"));
+                            String date = cursor.getString(cursor.getColumnIndex("date"));
+                            String description = cursor.getString(cursor.getColumnIndex("description"));
+                            String service_name = cursor.getString(cursor.getColumnIndex("name"));
                             list.add(new Note(id, service_id, price, date, description, service_name));
                         }
                         notifyDataSetChanged();
@@ -107,11 +107,5 @@ public class AdapterNote extends BaseAdapter {
         });
 
         return row;
-    }
-
-    private String formatDecimal(double number, String format, Locale locale) {
-        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
-        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
-        return formatter.format(number);
     }
 }

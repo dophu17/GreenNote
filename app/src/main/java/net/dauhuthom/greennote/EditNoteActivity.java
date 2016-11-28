@@ -92,13 +92,9 @@ public class EditNoteActivity extends AppCompatActivity {
         double price = cursor.getDouble(cursor.getColumnIndex("price"));
         String description = cursor.getString(cursor.getColumnIndex("description"));
         String date = cursor.getString(cursor.getColumnIndex("date"));
-        etPrice.setText(formatDecimal(price, "###,###,###,###,###", Locale.GERMANY));
+        etPrice.setText(new Function().formatDecimal(price, "###,###,###,###,###", Locale.GERMANY));
         etDescription.setText(description);
-        String strArrtmp[] = date.split("-");
-        int day = Integer.parseInt(strArrtmp[2]);
-        int month = Integer.parseInt(strArrtmp[1]);
-        int year = Integer.parseInt(strArrtmp[0]);
-        etDate.setText(date);
+        etDate.setText(new Function().formatDate(date, "yyyy-mm-dd", "mm-dd-yyyy"));
 
         //get img_service
         int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -167,21 +163,6 @@ public class EditNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-    }
-
-    private String formatDate(String date) {
-        NumberFormat numberFormat = new DecimalFormat("00");
-        String strArrtmp[] = date.split("-");
-        int day = Integer.parseInt(strArrtmp[1]);
-        int month = Integer.parseInt(strArrtmp[0]);
-        int year = Integer.parseInt(strArrtmp[2]);
-        return year + "-" + numberFormat.format(month) + "-" + numberFormat.format(day);
-    }
-
-    private String formatDecimal(double number, String format, Locale locale) {
-        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
-        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
-        return formatter.format(number);
     }
 }
 

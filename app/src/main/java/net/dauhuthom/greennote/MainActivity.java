@@ -19,8 +19,7 @@ import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    ServiceDBHelper serviceDBHelper;
 
     Button btnToService, btnStatistical, btnToNote, btnAbout;
 
@@ -73,15 +72,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertServiceSimple() {
-        String[] serviceName = {
-                "Ăn uống",
-                "Xem phim",
-                "Mua sắm"
-        };
-        ContentValues contentValues = new ContentValues();
-        //contentValues.put("name", name);
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.insert("services", null, contentValues);
+        serviceDBHelper = new ServiceDBHelper(this);
+        Cursor cursor = serviceDBHelper.getAll();
+        if (cursor.getCount() == 0) {
+            String[] serviceName = {
+                    "Ăn uống",
+                    "Xem phim",
+                    "Mua sắm",
+                    "Cafe"
+            };
+            for (int i = 0; i < serviceName.length; i++) {
+                ContentValues contentValues = new ContentValues();
+                serviceDBHelper = new ServiceDBHelper(this);
+                serviceDBHelper.insert(serviceName[i]);
+            }
+        }
     }
 
     @Override

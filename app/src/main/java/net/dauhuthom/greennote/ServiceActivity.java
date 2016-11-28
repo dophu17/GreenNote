@@ -82,7 +82,7 @@ public class ServiceActivity extends AppCompatActivity {
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
-            String name = cursor.getString(1);
+            String name = cursor.getString(cursor.getColumnIndex("name"));
             list.add(new Service(id, name));
         }
         adapter.notifyDataSetChanged();

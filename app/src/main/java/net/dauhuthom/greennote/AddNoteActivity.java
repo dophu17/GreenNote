@@ -109,9 +109,9 @@ public class AddNoteActivity extends AppCompatActivity {
                 String description = etDescription.getText().toString();
                 String changeDate = etDate.getText() + "";
                 noteDBHelper = new NoteDBHelper(getApplicationContext());
-                noteDBHelper.insert(service_id, Double.parseDouble(price), changeDate, description);
+                long id = noteDBHelper.insert(service_id, Double.parseDouble(price), new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd"), description);
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
                 startActivity(intent);
             }
         });
@@ -140,15 +140,6 @@ public class AddNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-    }
-
-    private String formatDate(String date) {
-        NumberFormat numberFormat = new DecimalFormat("00");
-        String strArrtmp[] = date.split("-");
-        int day = Integer.parseInt(strArrtmp[1]);
-        int month = Integer.parseInt(strArrtmp[0]);
-        int year = Integer.parseInt(strArrtmp[2]);
-        return year + "-" + numberFormat.format(month) + "-" + numberFormat.format(day);
     }
 }
 

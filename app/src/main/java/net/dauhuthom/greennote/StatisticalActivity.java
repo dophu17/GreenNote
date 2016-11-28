@@ -3,7 +3,6 @@ package net.dauhuthom.greennote;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -23,14 +21,13 @@ import java.util.Locale;
 
 public class StatisticalActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    NoteDBHelper noteDBHelper;
     Calendar calendar;
     Date date;
     String currentDate = null;
     double totalToday = 0, totalYesterday = 0, totalThisMonth = 0, totalLastMonth = 0;
 
-    TextView tvToday, tvThisMonth, tvYesterday, tvLastMonth, tvChangeDate, tvWarningDay, tvWarningMonth, tvWarningWeek;
+    TextView tvToday, tvThisMonth, tvYesterday, tvLastMonth, tvChangeDate, tvWarningDay, tvWarningMonth;
     Button btnChangeDate;
 
     @Override
@@ -66,55 +63,47 @@ public class StatisticalActivity extends AppCompatActivity {
     }
 
     public void readData() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date DATETIME, description TEXT)");
-
+        noteDBHelper = new NoteDBHelper(this);
         //today
-        Cursor cursor = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date = date('" + currentDate + "')", null);
+        Cursor cursor = noteDBHelper.getSumToday(currentDate);
         if (cursor.moveToFirst()) {
-            tvToday.setText(formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvToday.setText(new Function().formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalToday = cursor.getDouble(0);
         }
         //this month
-        Cursor cursorThisMonth = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('" + currentDate + "', 'start of month') AND date('" + currentDate + "', 'start of month' , '+1 month', '-1 days')", null);
+        Cursor cursorThisMonth = noteDBHelper.getSumThisMonth(currentDate);
         if (cursorThisMonth.moveToFirst()) {
-            tvThisMonth.setText(formatDecimal(cursorThisMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvThisMonth.setText(new Function().formatDecimal(cursorThisMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalThisMonth = cursorThisMonth.getDouble(0);
         }
         //yesterday
-        Cursor cursorYesterday = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('" + currentDate + "', '-2 days') AND date('" + currentDate + "', '-1 days')", null);
+        Cursor cursorYesterday = noteDBHelper.getSumYesterday(currentDate);
         if (cursorYesterday.moveToFirst()) {
-            tvYesterday.setText(formatDecimal(cursorYesterday.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvYesterday.setText(new Function().formatDecimal(cursorYesterday.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalYesterday = cursorYesterday.getDouble(0);
         }
         //last month
-        Cursor cursorLastMonth = database.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('" + currentDate + "', 'start of month', '-1 month') AND date('" + currentDate + "', 'start of month', '-1 days')", null);
+        Cursor cursorLastMonth = noteDBHelper.getSumLastMonth(currentDate);
         if (cursorLastMonth.moveToFirst()) {
-            tvLastMonth.setText(formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvLastMonth.setText(new Function().formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalLastMonth = cursorLastMonth.getDouble(0);
         }
 
         //warning
         if (totalToday <= totalYesterday) {
-            tvWarningDay.setText("Great! Save than yesterday " + formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvWarningDay.setText("Great! Save than yesterday " + new Function().formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
             tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
         } else {
-            tvWarningDay.setText("Bad! Waste than yesterday " + formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvWarningDay.setText("Bad! Waste than yesterday " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
             tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
         }
         if (totalThisMonth <= totalLastMonth) {
-            tvWarningMonth.setText("Great! Save than last month " + formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvWarningMonth.setText("Great! Save than last month " + new Function().formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
             tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
         } else {
-            tvWarningMonth.setText("Bad! Waste than last month " + formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+            tvWarningMonth.setText("Bad! Waste than last month " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
             tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
         }
-    }
-
-    private String formatDecimal(double number, String format, Locale locale) {
-        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
-        DecimalFormat formatter = new DecimalFormat (format, otherSymbols);
-        return formatter.format(number);
     }
 
     private void addEvents() {

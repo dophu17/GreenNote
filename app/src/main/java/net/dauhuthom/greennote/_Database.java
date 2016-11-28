@@ -13,7 +13,7 @@ import java.io.InputStream;
  * Created by DHTP on 11/4/2016.
  */
 
-public class Database {
+public class _Database {
     public static SQLiteDatabase initDatabase(Activity activity, String databaseName){
         try {
             String outFileName = activity.getApplicationInfo().dataDir + "/databases/" + databaseName;

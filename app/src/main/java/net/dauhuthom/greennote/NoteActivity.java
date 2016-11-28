@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,30 +76,16 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void readData() {
-<<<<<<< HEAD
-//        database = Database.initDatabase(this, DATABASE_NAME);
-//        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DATETIME, description TEXT)");
-//        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        //Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
         noteDBHelper = new NoteDBHelper(this);
-        serviceDBHelper = new ServiceDBHelper(this);
-        //Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
         Cursor cursor = noteDBHelper.getAllJoinNow();
-=======
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DATETIME, description TEXT)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
-        //Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
->>>>>>> 170f87556b2b0042387b0ff1edf9d49099494e64
 
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
             double price = cursor.getDouble(cursor.getColumnIndex("price"));
-            String date = cursor.getString(3);
-            String description = cursor.getString(4);
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            String description = cursor.getString(cursor.getColumnIndex("description"));
             String service_name = cursor.getString(cursor.getColumnIndex("name"));
             list.add(new Note(id, service_id, price, date, description, service_name));
         }
