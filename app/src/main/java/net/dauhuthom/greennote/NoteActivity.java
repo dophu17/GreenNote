@@ -18,8 +18,8 @@ import java.util.Locale;
 
 public class NoteActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    NoteDBHelper noteDBHelper;
+    ServiceDBHelper serviceDBHelper;
     ArrayList<Note> list;
     AdapterNote adapter;
     Calendar calendar;
@@ -75,11 +75,14 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void readData() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DATETIME, description TEXT)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
+//        database = Database.initDatabase(this, DATABASE_NAME);
+//        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date VARCHAR DATETIME, description TEXT)");
+//        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
         //Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
-        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
+        noteDBHelper = new NoteDBHelper(this);
+        serviceDBHelper = new ServiceDBHelper(this);
+        //Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id", null);
+        Cursor cursor = noteDBHelper.getAllJoinNow();
 
         list.clear();
         while (cursor.moveToNext()) {

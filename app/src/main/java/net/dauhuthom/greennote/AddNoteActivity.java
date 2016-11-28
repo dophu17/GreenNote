@@ -33,8 +33,8 @@ import static android.R.attr.name;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    NoteDBHelper noteDBHelper;
+    ServiceDBHelper serviceDBHelper;
     ArrayList<Service> listService;
     AdapterSpinnerService adapter;
     int ServiceID = -1;
@@ -65,9 +65,8 @@ public class AddNoteActivity extends AppCompatActivity {
         listService = new ArrayList<>();
 
         //load img_service
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+        Cursor cursor = serviceDBHelper.getAll();
         listService.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -104,7 +103,16 @@ public class AddNoteActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insert();
+                String price = etCost.getText().toString();
+                price = price.replace(".", "");
+                int service_id = ServiceID;
+                String description = etDescription.getText().toString();
+                String changeDate = etDate.getText() + "";
+                noteDBHelper = new NoteDBHelper(getApplicationContext());
+                noteDBHelper.insert(service_id, Double.parseDouble(price), changeDate, description);
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -132,26 +140,6 @@ public class AddNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-    }
-
-    private void insert() {
-        String price = etCost.getText().toString();
-        price = price.replace(".", "");
-        int service_id = ServiceID;
-        String description = etDescription.getText().toString();
-        String changeDate = etDate.getText() + "";
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("price", price);
-        contentValues.put("service_id", service_id);
-        contentValues.put("description", description);
-        contentValues.put("date", formatDate(changeDate));
-
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , service_id INTEGER, price DOUBLE, date DATETIME , description TEXT)");
-        database.insert("notes", null, contentValues);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     private String formatDate(String date) {

@@ -20,8 +20,7 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class ServiceActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    ServiceDBHelper serviceDBHelper;
     ArrayList<Service> list;
     AdapterService adapter;
 
@@ -78,9 +77,8 @@ public class ServiceActivity extends AppCompatActivity {
     }
 
     public void readData() {
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        serviceDBHelper = new ServiceDBHelper(this);
+        Cursor cursor = serviceDBHelper.getAll();
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

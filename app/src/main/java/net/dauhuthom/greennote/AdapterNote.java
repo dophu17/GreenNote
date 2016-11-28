@@ -27,7 +27,6 @@ public class AdapterNote extends BaseAdapter {
 
     Activity context;
     ArrayList<Note> list;
-    final String DATABASE_NAME = "GreenNote.sqlite";
 
     public AdapterNote(Activity context, ArrayList<Note> list) {
         this.context = context;
@@ -80,7 +79,21 @@ public class AdapterNote extends BaseAdapter {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        delete(note.id);
+                        NoteDBHelper noteDBHelper = new NoteDBHelper(context);
+                        noteDBHelper.delete(note.id);
+
+                        Cursor cursor = noteDBHelper.getAll();
+                        list.clear();
+                        while (cursor.moveToNext()) {
+                            int id = cursor.getInt(0);
+                            int service_id = cursor.getInt(1);
+                            double price = cursor.getDouble(2);
+                            String date = cursor.getString(3);
+                            String description = cursor.getString(4);
+                            String service_name = cursor.getString(5);
+                            list.add(new Note(id, service_id, price, date, description, service_name));
+                        }
+                        notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -94,23 +107,6 @@ public class AdapterNote extends BaseAdapter {
         });
 
         return row;
-    }
-
-    private void delete(int idNote) {
-        SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
-        database.delete("notes", "id = ?", new String[]{idNote + ""});
-        Cursor cursor = database.rawQuery("SELECT notes.*, services.name FROM notes LEFT JOIN services ON notes.service_id = services.id WHERE date = date('now', 'localtime')", null);
-        list.clear();
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            int service_id = cursor.getInt(1);
-            double price = cursor.getDouble(2);
-            String date = cursor.getString(3);
-            String description = cursor.getString(4);
-            String service_name = cursor.getString(5);
-            list.add(new Note(id, service_id, price, date, description, service_name));
-        }
-        notifyDataSetChanged();
     }
 
     private String formatDecimal(double number, String format, Locale locale) {

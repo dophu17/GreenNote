@@ -79,7 +79,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="6e2b25c612918d7f39f0b936bb5896f87a55a968">
+        sha1="a9385911266f46385bdf938d838f9fcd3c5ec233">
         <dex dex="C:\Users\dhtp\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_5d5f61d660fc3424f565275dfbb254b457208185\classes.dex" />
     </item>
     <item
@@ -151,7 +151,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="d2ad3fb71ead11e22bb31d30c10077d8b4e7b367">
+        sha1="bf4701a7722cef9fa1f8ecf5de3815891f5bbd6b">
         <dex dex="C:\Users\dhtp\AndroidStudioProjects\GreenNote\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7f63cc2ebb8eb61c601bf35f733bb74942eb1fa6\classes.dex" />
     </item>
     <item

@@ -11,8 +11,7 @@ import android.widget.EditText;
 
 public class AddServiceActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    ServiceDBHelper serviceDBHelper;
 
     EditText etServiceName;
     Button btnSaveService;
@@ -31,7 +30,12 @@ public class AddServiceActivity extends AppCompatActivity {
         btnSaveService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insert();
+                serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+                String name = etServiceName.getText().toString();
+                long id = serviceDBHelper.insert(name);
+
+                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -39,17 +43,5 @@ public class AddServiceActivity extends AppCompatActivity {
     private void addControls() {
         etServiceName = (EditText) findViewById(R.id.etServiceName);
         btnSaveService = (Button) findViewById(R.id.btnSaveService);
-    }
-
-    private void insert() {
-        String name = etServiceName.getText().toString();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.insert("services", null, contentValues);
-        Intent intent = new Intent(this, ServiceActivity.class);
-        startActivity(intent);
     }
 }

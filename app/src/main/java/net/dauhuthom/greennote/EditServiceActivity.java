@@ -12,8 +12,7 @@ import android.widget.EditText;
 
 public class EditServiceActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    ServiceDBHelper serviceDBHelper;
     int id = -1;
 
     EditText etServiceName;
@@ -32,19 +31,24 @@ public class EditServiceActivity extends AppCompatActivity {
     private void initUI() {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", -1);
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM services WHERE id = ?", new String[]{id + ""});
+        serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+        Cursor cursor = serviceDBHelper.get(id);
         cursor.moveToFirst();
         String name = cursor.getString(1);
         etServiceName.setText(name);
     }
 
     private void addEvents() {
-        //insert
+        //update
         btnSaveService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                update();
+                String name = etServiceName.getText().toString();
+                serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+                serviceDBHelper.update(id, name);
+
+                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -52,17 +56,5 @@ public class EditServiceActivity extends AppCompatActivity {
     private void addControls() {
         etServiceName = (EditText) findViewById(R.id.etServiceName);
         btnSaveService = (Button) findViewById(R.id.btnSaveService);
-    }
-
-    private void update() {
-        String name = etServiceName.getText().toString();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.update("services", contentValues, "id = ?", new String[]{id + ""});
-        Intent intent = new Intent(this, ServiceActivity.class);
-        startActivity(intent);
     }
 }

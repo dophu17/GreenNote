@@ -27,8 +27,8 @@ import java.util.Locale;
 
 public class EditNoteActivity extends AppCompatActivity {
 
-    final String DATABASE_NAME = "GreenNote.sqlite";
-    SQLiteDatabase database;
+    NoteDBHelper noteDBHelper;
+    ServiceDBHelper serviceDBHelper;
     ArrayList<Service> listService;
     AdapterSpinnerService adapter;
     int id = -1;
@@ -61,9 +61,8 @@ public class EditNoteActivity extends AppCompatActivity {
         listService = new ArrayList<>();
 
         //load img_service
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.execSQL("CREATE TABLE IF NOT EXISTS services(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , name TEXT)");
-        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
+        serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+        Cursor cursor = serviceDBHelper.getAll();
         listService.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -86,8 +85,9 @@ public class EditNoteActivity extends AppCompatActivity {
     private void initUI() {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", -1);
-        database = Database.initDatabase(this, DATABASE_NAME);
-        Cursor cursor = database.rawQuery("SELECT * FROM notes WHERE id = ?", new String[]{id + ""});
+
+        noteDBHelper = new NoteDBHelper(getApplicationContext());
+        Cursor cursor = noteDBHelper.get(id);
         cursor.moveToFirst();
         double price = cursor.getDouble(cursor.getColumnIndex("price"));
         String description = cursor.getString(cursor.getColumnIndex("description"));
@@ -126,11 +126,20 @@ public class EditNoteActivity extends AppCompatActivity {
             }
         });
 
-        //insert
+        //update
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                update();
+                String price = etPrice.getText().toString();
+                price = price.replace(".", "");
+                double dPrice = Double.parseDouble(price);
+                String description = etDescription.getText().toString();
+                String changeDate = etDate.getText() + "";
+                noteDBHelper = new NoteDBHelper(getApplicationContext());
+                noteDBHelper.update(id, ServiceID, dPrice, changeDate, description);
+
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -158,24 +167,6 @@ public class EditNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-    }
-
-    private void update() {
-        String price = etPrice.getText().toString();
-        price = price.replace(".", "");
-        String description = etDescription.getText().toString();
-        String changeDate = etDate.getText() + "";
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("price", price);
-        contentValues.put("description", description);
-        contentValues.put("date", formatDate(changeDate));
-        contentValues.put("service_id", ServiceID);
-
-        database = Database.initDatabase(this, DATABASE_NAME);
-        database.update("notes", contentValues, "id = ?", new String[]{id + ""});
-        Intent intent = new Intent(this, NoteActivity.class);
-        startActivity(intent);
     }
 
     private String formatDate(String date) {

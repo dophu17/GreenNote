@@ -24,7 +24,6 @@ import java.util.zip.Inflater;
 public class AdapterService extends BaseAdapter {
     Activity context;
     ArrayList<Service> list;
-    final String DATABASE_NAME = "GreenNote.sqlite";
 
     public AdapterService(Activity context, ArrayList<Service> list) {
         this.context = context;
@@ -75,7 +74,17 @@ public class AdapterService extends BaseAdapter {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        delete(service.id);
+                        ServiceDBHelper serviceDBHelper = new ServiceDBHelper(context);
+                        serviceDBHelper.delete(service.id);
+
+                        Cursor cursor = serviceDBHelper.getAll();
+                        list.clear();
+                        while (cursor.moveToNext()) {
+                            int id = cursor.getInt(0);
+                            String name = cursor.getString(1);
+                            list.add(new Service(id, name));
+                        }
+                        notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -89,18 +98,5 @@ public class AdapterService extends BaseAdapter {
         });
 
         return row;
-    }
-
-    private void delete(int idService) {
-        SQLiteDatabase database = Database.initDatabase(context, DATABASE_NAME);
-        database.delete("services", "id = ?", new String[]{idService + ""});
-        Cursor cursor = database.rawQuery("SELECT * FROM services", null);
-        list.clear();
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            list.add(new Service(id, name));
-        }
-        notifyDataSetChanged();
     }
 }
