@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     ServiceDBHelper serviceDBHelper;
 
-    Button btnToService, btnStatistical, btnToNote, btnAbout;
+    Button btnToService, btnStatistical, btnToNote, btnAbout, btnSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnToNote = (Button) findViewById(R.id.btnToNote);
         btnStatistical = (Button) findViewById(R.id.btnStatistical);
         btnAbout = (Button) findViewById(R.id.btnAbout);
+        btnSetting = (Button) findViewById(R.id.btnSetting);
     }
 
     private void addEvents() {
@@ -66,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                 startActivity(intent);
             }
         });

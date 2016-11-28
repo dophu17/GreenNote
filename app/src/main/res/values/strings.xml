@@ -8,4 +8,5 @@
     <string name="edit_note_name">Edit note</string>
     <string name="statistical_name">Statistical</string>
     <string name="about_name">About</string>
+    <string name="setting_name">Setting</string>
 </resources>
