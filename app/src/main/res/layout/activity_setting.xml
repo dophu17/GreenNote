@@ -10,15 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.SettingActivity">
 
-    <TextView
-        android:text="Email:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView9" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +37,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"
-        android:id="@+id/switch1"
+        android:id="@+id/switchAutoSend"
         android:splitTrack="false"
         android:checked="false"
         android:textAlignment="viewStart" />
@@ -55,9 +46,9 @@
         android:text="Auto send to email statistical infomation when end month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/switch1"
-        android:layout_toRightOf="@+id/switch1"
-        android:layout_toEndOf="@+id/switch1"
+        android:layout_alignBottom="@+id/switchAutoSend"
+        android:layout_toRightOf="@+id/switchAutoSend"
+        android:layout_toEndOf="@+id/switchAutoSend"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:id="@+id/textView15" />
@@ -70,5 +61,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="134dp"
         android:id="@+id/btnSave" />
+
+    <TextView
+        android:text="Email:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_alignBaseline="@+id/etEmail"
+        android:layout_alignBottom="@+id/etEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

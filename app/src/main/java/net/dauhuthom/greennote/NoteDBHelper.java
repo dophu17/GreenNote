@@ -16,14 +16,9 @@ import java.util.Date;
  */
 
 public class NoteDBHelper extends DBhelper {
-    Calendar calendar;
-    Date date;
 
     public NoteDBHelper(Context context) {
         super(context);
-
-        calendar = Calendar.getInstance();
-        date = calendar.getTime();
     }
 
     public long insert (int service_id, double price, String date, String description) {
