@@ -52,9 +52,9 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         }
-        settingDBHelper = new SettingDBHelper(this);
-        Cursor cursor1 = settingDBHelper.getAll();
-        Toast.makeText(this, cursor1.getCount() + "", Toast.LENGTH_SHORT).show();
+//        settingDBHelper = new SettingDBHelper(this);
+//        Cursor cursor1 = settingDBHelper.getAll();
+//        Toast.makeText(this, cursor1.getCount() + "", Toast.LENGTH_SHORT).show();
     }
 
     private void addControls() {
@@ -131,24 +131,14 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void composeEmail() {
-        Log.i("Send email", "");
-        String[] TO = {"dophu17@gmail.com"};
-        String[] CC = {""};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("message/rfc822");
 
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        }
-        catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(SettingActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject of email");
+        intent.putExtra(Intent.EXTRA_TEXT,    "Body of email");
+        intent.setData(Uri.parse("dophu17@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        //startActivity(intent);
     }
 }
