@@ -1,5 +1,7 @@
 package net.dauhuthom.greennote;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +17,17 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
+
 public class SettingActivity extends AppCompatActivity {
 
     SettingDBHelper settingDBHelper;
+    NoteDBHelper noteDBHelper;
 
-    Button btnSave;
+    Button btnSave, btnSendEmail;
     EditText etEmail;
-    Switch switchAutoSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +66,8 @@ public class SettingActivity extends AppCompatActivity {
 
     private void addControls() {
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnSendEmail = (Button) findViewById(R.id.btnSendEmail);
         etEmail = (EditText) findViewById(R.id.etEmail);
-        switchAutoSend = (Switch) findViewById(R.id.switchAutoSend);
     }
 
     private void addEvents() {
@@ -81,25 +88,17 @@ public class SettingActivity extends AppCompatActivity {
                         String email_description = null;
                         settingDBHelper.update(cursor.getInt(cursor.getColumnIndex("id")), email_key, email_value, email_default_value, email_description);
                     }
-
-                    //key = autosend
-                    if (key.equals("autosend")) {
-                        String autosend_key = "autosend";
-                        String autosend_value = "no";
-                        String autosend_default_value = null;
-                        String autosend_description = null;
-                        if (switchAutoSend.isChecked()) {
-                            autosend_value = "yes";
-                        }
-                        settingDBHelper.update(cursor.getInt(cursor.getColumnIndex("id")), autosend_key, autosend_value, autosend_default_value, autosend_description);
-                    }
                 }
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
+            }
+        });
+        btnSendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 //send email
-                composeEmail();
+                sendEmail();
             }
         });
     }
@@ -111,34 +110,59 @@ public class SettingActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             String key = cursor.getString(cursor.getColumnIndex("key"));
             String value = cursor.getString(cursor.getColumnIndex("value"));
-            //if (key.length() > 0 && value.length() > 0) {
-                //key = email
-                if (key.equals("email")) {
-                    etEmail.setText(value);
-                }
-
-                //key = autosend
-                if (key.equals("autosend")) {
-                        if (value.equals("yes")) {
-                            switchAutoSend.setChecked(true);
-                        } else {
-                            switchAutoSend.setChecked(false);
-                        }
-                }
-           //}
-
+            //key = email
+            if (key.equals("email")) {
+                etEmail.setText(value);
+            }
         }
     }
 
-    private void composeEmail() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
-        intent.setType("message/rfc822");
+    private void sendEmail() {
+        //get data body email
+        noteDBHelper = new NoteDBHelper(this);
+        Cursor cursor = noteDBHelper.getAllJoinLastMonth();
+        String emailTo = etEmail.getText().toString();
+        if (emailTo.length() <= 0) {
+            emailTo = "dophu17@gmail.com";
+        }
 
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject of email");
-        intent.putExtra(Intent.EXTRA_TEXT,    "Body of email");
-        intent.setData(Uri.parse("dophu17@gmail.com")); // or just "mailto:" for blank
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
-        //startActivity(intent);
+        ArrayList tmp = new ArrayList();
+        String str = "";
+//        String str = "<table border='1'>";
+        while (cursor.moveToNext()) {
+            String date = new Function().formatDate(cursor.getString(cursor.getColumnIndex("date")), "mm-dd-yyyy", "yyyy-mm-dd");
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            String price = new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND";
+            String description = cursor.getString(cursor.getColumnIndex("description"));
+//            str += "<tr>";
+            if (tmp.contains(date)) {
+                str += name + " (" + price + ") " + description + "<br />";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("date")) + "</td>";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("name")) + "</td>";
+//                str += "<td>"  + new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND" + ") " + "</td>";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("description")) + "</td>";
+            } else {
+                tmp.add(cursor.getString(cursor.getColumnIndex("date")));
+                str += "<br /><b>[" + date + "]</b><br />";
+                str += name + " (" + price + ") " + description + "<br />";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("date")) + "</td>";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("name")) + "</td>";
+//                str += "<td>"  + new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND" + ") " + "</td>";
+//                str += "<td>"  + cursor.getString(cursor.getColumnIndex("description")) + "</td>";
+            }
+//            str += "</tr>";
+        }
+//        str += "</table>";
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/html"); //text/plain -- message/rfc822 -- text/html
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{emailTo});
+        i.putExtra(Intent.EXTRA_SUBJECT, "The report is detail statistical last month");
+        i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(str));
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(SettingActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -51,13 +51,14 @@
             android:layout_alignParentStart="true" />
 
         <Button
-            android:layout_width="150dp"
+            android:id="@+id/btnAbout"
+            android:background="@drawable/about"
             android:layout_height="150dp"
-            android:layout_below="@+id/btnToService"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/setting"
-            android:id="@+id/btnSetting" />
+            android:layout_width="150dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentEnd="true" />
     </TableRow>
 
     <TableRow
@@ -67,13 +68,13 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/btnAbout"
-            android:background="@drawable/about"
-            android:layout_height="150dp"
             android:layout_width="150dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_height="150dp"
+            android:layout_below="@+id/btnToService"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/setting"
+            android:id="@+id/btnSetting" />
     </TableRow>
 
 </TableLayout>

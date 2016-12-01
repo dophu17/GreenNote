@@ -132,7 +132,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 String description = etDescription.getText().toString();
                 String changeDate = etDate.getText() + "";
                 noteDBHelper = new NoteDBHelper(getApplicationContext());
-                noteDBHelper.update(id, ServiceID, dPrice, changeDate, description);
+                noteDBHelper.update(id, ServiceID, dPrice, new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd"), description);
 
                 Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
                 startActivity(intent);

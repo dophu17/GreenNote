@@ -95,4 +95,10 @@ public class NoteDBHelper extends DBhelper {
         Cursor cursor =  sqLiteDatabase.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('" + currentDate + "', 'start of month', '-1 month') AND date('" + currentDate + "', 'start of month', '-1 days')", null);
         return cursor;
     }
+
+    public Cursor getAllJoinLastMonth() {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days')", null);
+        return cursor;
+    }
 }
