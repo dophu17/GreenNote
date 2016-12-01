@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_note"
     android:layout_width="match_parent"
@@ -8,44 +9,128 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.dauhuthom.greennote.NoteActivity">
+    tools:context="net.dauhuthom.greennote.NoteActivity"
+    android:background="@android:color/background_light">
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate"
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/background_light"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Tổng tiền hôm nay:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/tvDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/black"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp" />
+
+    <TextView
+        android:text="0 VND"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:id="@+id/tvTotal"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/btnAddNote"
+        android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="17dp"
+        android:layout_above="@+id/toolbar"
         android:id="@+id/lvNote" />
 
-    <Button
-        android:layout_height="38dp"
-        android:id="@+id/btnAddNote"
-        android:background="@drawable/add"
-        android:layout_width="38dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_above="@+id/lvNote"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/back"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/btnBack" />
-
-    <TextView
-        android:text="TextView"
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvDate"
-        android:layout_alignBaseline="@+id/btnAddNote"
-        android:layout_alignBottom="@+id/btnAddNote"
-        android:textColor="#000"
-        android:layout_centerHorizontal="true" />
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:id="@+id/floatingActionButtonAdd"
+        android:layout_weight="1"
+        android:layout_above="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        app:backgroundTint="@color/colorNote2_press" />
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@android:color/background_light"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/toolbar"
+        android:padding="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="38dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:text="Ghi chú"
+            android:layout_width="wrap_content"
+            android:id="@+id/btnNote"
+            android:layout_weight="1"
+            android:background="@color/colorNote2_press"
+            android:textColor="#FFFFFF"
+            android:layout_height="38dp"
+            android:textSize="10sp" />
+
+        <Button
+            android:text="Thống kê"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:id="@+id/btnStatistical"
+            android:layout_weight="1"
+            android:background="@color/colorStatistical2"
+            android:textSize="10sp" />
+
+        <Button
+            android:text="Mục chi tiêu"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:id="@+id/btnService"
+            android:layout_weight="1"
+            android:background="@color/colorService2"
+            android:textSize="10sp" />
+
+        <Button
+            android:text="..."
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:id="@+id/btnOther"
+            android:layout_weight="1"
+            android:background="@color/colorOthe2"
+            android:textSize="10sp" />
+    </LinearLayout>
 
 </RelativeLayout>

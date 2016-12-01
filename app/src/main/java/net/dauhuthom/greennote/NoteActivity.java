@@ -3,6 +3,7 @@ package net.dauhuthom.greennote;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,9 +27,10 @@ public class NoteActivity extends AppCompatActivity {
     Calendar calendar;
     Date date;
 
-    Button btnAddNote, btnBack;
     ListView lvNote;
-    TextView tvDate;
+    TextView tvDate, tvTotal;
+    FloatingActionButton floatingActionButtonAdd;
+    Button btnNote, btnStatistical, btnService, btnOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +43,17 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        btnAddNote = (Button) findViewById(R.id.btnAddNote);
-        btnBack = (Button) findViewById(R.id.btnBack);
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
         adapter = new AdapterNote(this, list);
         lvNote.setAdapter(adapter);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        tvTotal = (TextView) findViewById(R.id.tvTotal);
+        floatingActionButtonAdd = (FloatingActionButton) findViewById(R.id.floatingActionButtonAdd);
+        btnNote = (Button) findViewById(R.id.btnNote);
+        btnStatistical = (Button) findViewById(R.id.btnStatistical);
+        btnService = (Button) findViewById(R.id.btnService);
+        btnOther = (Button) findViewById(R.id.btnOther);
 
         //date current
         calendar = Calendar.getInstance();
@@ -58,18 +64,37 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        btnAddNote.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
                 startActivity(intent);
             }
         });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+            }
+        });
+        btnStatistical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StatisticalActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OtherActivity.class);
                 startActivity(intent);
             }
         });
@@ -80,6 +105,7 @@ public class NoteActivity extends AppCompatActivity {
         Cursor cursor = noteDBHelper.getAllJoinNow();
 
         list.clear();
+        Double total = 0.0;
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -88,7 +114,10 @@ public class NoteActivity extends AppCompatActivity {
             String description = cursor.getString(cursor.getColumnIndex("description"));
             String service_name = cursor.getString(cursor.getColumnIndex("name"));
             list.add(new Note(id, service_id, price, date, description, service_name));
+
+            total = total + price;
         }
         adapter.notifyDataSetChanged();
+        tvTotal.setText(new Function().formatDecimal(total, "###,###,###,###,###", Locale.GERMANY) + " VND");
     }
 }

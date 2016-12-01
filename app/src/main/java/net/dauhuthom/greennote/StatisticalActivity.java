@@ -1,6 +1,7 @@
 package net.dauhuthom.greennote;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.ContextCompat;
@@ -28,7 +29,7 @@ public class StatisticalActivity extends AppCompatActivity {
     double totalToday = 0, totalYesterday = 0, totalThisMonth = 0, totalLastMonth = 0;
 
     TextView tvToday, tvThisMonth, tvYesterday, tvLastMonth, tvChangeDate, tvWarningDay, tvWarningMonth;
-    Button btnChangeDate;
+    Button btnChangeDate, btnNote, btnStatistical, btnService, btnOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,10 @@ public class StatisticalActivity extends AppCompatActivity {
         tvWarningMonth = (TextView) findViewById(R.id.tvWarningMonth);
         tvChangeDate = (TextView) findViewById(R.id.tvChangeDate);
         btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
+        btnNote = (Button) findViewById(R.id.btnNote);
+        btnStatistical = (Button) findViewById(R.id.btnStatistical);
+        btnService = (Button) findViewById(R.id.btnService);
+        btnOther = (Button) findViewById(R.id.btnOther);
 
         //date current
         calendar = Calendar.getInstance();
@@ -133,6 +138,33 @@ public class StatisticalActivity extends AppCompatActivity {
                         onDateSetListener, year, month, day);
                 datePickerDialog.setTitle("Change date");
                 datePickerDialog.show();
+            }
+        });
+        btnNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnStatistical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        btnService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OtherActivity.class);
+                startActivity(intent);
             }
         });
     }

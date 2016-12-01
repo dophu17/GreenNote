@@ -12,7 +12,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -35,13 +35,20 @@
             android:label="@string/statistical_name" />
         <activity
             android:name=".NoteActivity"
-            android:label="@string/note_name" />
+            android:label="@string/note_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".AboutActivity"
             android:label="@string/about_name" />
         <activity
             android:name=".SettingActivity"
-            android:label="@string/setting_name"></activity>
+            android:label="@string/setting_name" />
+        <activity android:name=".OtherActivity"></activity>
     </application>
 
 </manifest>

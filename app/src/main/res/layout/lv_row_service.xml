@@ -7,6 +7,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
         android:layout_weight="1">
 
         <TextView
@@ -18,16 +20,15 @@
 
         <Button
             android:id="@+id/btnEdit"
-            android:background="@drawable/edit"
-            android:layout_weight="0.04"
-            android:layout_width="38dp"
-            android:layout_height="38dp" />
+            android:background="@android:drawable/ic_menu_edit"
+            android:layout_width="29dp"
+            android:layout_height="30dp" />
 
         <Button
-            android:background="@drawable/delete"
+            android:background="@android:drawable/ic_menu_delete"
             android:id="@+id/btnDelete"
-            android:layout_width="38dp"
-            android:layout_height="38dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
     </LinearLayout>
 

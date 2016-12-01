@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_statistical"
     android:layout_width="match_parent"
@@ -10,204 +10,273 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.StatisticalActivity">
 
-    <TableRow
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="right">
+        android:layout_above="@+id/linearLayout">
 
-        <TextView
-            android:text="11-23-2016"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="right"
-            android:layout_column="1"
-            android:paddingTop="10dp"
-            android:id="@+id/tvChangeDate" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
 
-        <Button
-            android:layout_height="38dp"
-            android:background="@drawable/calendar"
-            android:id="@+id/btnChangeDate"
-            android:layout_gravity="right"
-            android:layout_column="1"
-            android:layout_width="38dp" />
+            <TextView
+                android:text="11-23-2016"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="right"
+                android:layout_column="1"
+                android:paddingTop="10dp"
+                android:id="@+id/tvChangeDate" />
 
-    </TableRow>
+            <Button
+                android:layout_height="38dp"
+                android:background="@drawable/calendar"
+                android:id="@+id/btnChangeDate"
+                android:layout_gravity="right"
+                android:layout_column="1"
+                android:layout_width="38dp" />
 
-    <TableRow
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <TextView
+                android:text="Ngày"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:id="@+id/textView16"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Hôm nay:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView12" />
+
+            <TextView
+                android:text="0 VND"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:id="@+id/tvToday" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Hôm qua:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView14" />
+
+            <TextView
+                android:text="0 VND"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:id="@+id/tvYesterday" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:text="Tháng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView13"
+                android:textAlignment="center"
+                android:textColor="#000"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Tháng này:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView23" />
+
+            <TextView
+                android:text="0 VND"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:id="@+id/tvThisMonth" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Tháng trước:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView24" />
+
+            <TextView
+                android:text="0 VND"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:id="@+id/tvLastMonth" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWarning"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:text="Nhận xét/Cảnh báo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView26"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Ngày:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView27" />
+
+            <TextView
+                android:text="Good!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:singleLine="false"
+                android:id="@+id/tvWarningDay" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="Tháng:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView29" />
+
+            <TextView
+                android:text="Good!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:singleLine="false"
+                android:id="@+id/tvWarningMonth" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
+        android:background="@android:color/background_light"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/toolbar"
+        android:padding="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="38dp" />
 
-        <TextView
-            android:text="Day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:id="@+id/textView16"
-            android:textAlignment="center" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:text="Today:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView12" />
-
-        <TextView
-            android:text="0 VND"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:id="@+id/tvToday" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:text="Yesterday:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView14" />
-
-        <TextView
-            android:text="0 VND"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:id="@+id/tvYesterday" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:layout_marginTop="10dp"
-        android:gravity="center">
-
-        <TextView
-            android:text="Month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView13"
-            android:textAlignment="center"
-            android:textColor="#000"/>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:text="This month:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView23" />
-
-        <TextView
-            android:text="0 VND"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:id="@+id/tvThisMonth" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:text="Last month:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView24" />
-
-        <TextView
-            android:text="0 VND"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:id="@+id/tvLastMonth" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWarning"
-        android:layout_marginTop="10dp"
-        android:gravity="center">
-
-        <TextView
-            android:text="Warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView26"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"/>
-
-    </TableRow>
-
-    <TableRow
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="Day:"
+        <Button
+            android:text="Ghi chú"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView27" />
+            android:id="@+id/btnNote"
+            android:layout_weight="1"
+            android:background="@color/colorNote2"
+            android:layout_height="38dp"
+            android:textSize="10sp" />
 
-        <TextView
-            android:text="Good!"
+        <Button
+            android:text="Thống kê"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:singleLine="false"
-            android:id="@+id/tvWarningDay" />
+            android:layout_height="38dp"
+            android:id="@+id/btnStatistical"
+            android:layout_weight="1"
+            android:background="@color/colorStatistical2_press"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
 
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:text="Month:"
+        <Button
+            android:text="Mục chi tiêu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView29" />
+            android:layout_height="38dp"
+            android:id="@+id/btnService"
+            android:layout_weight="1"
+            android:background="@color/colorService2"
+            android:textSize="10sp" />
 
-        <TextView
-            android:text="Good!"
+        <Button
+            android:text="..."
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:singleLine="false"
-            android:id="@+id/tvWarningMonth" />
-
-    </TableRow>
-</TableLayout>
+            android:layout_height="38dp"
+            android:id="@+id/btnOther"
+            android:layout_weight="1"
+            android:background="@color/colorOthe2"
+            android:textSize="10sp" />
+    </LinearLayout>
+</RelativeLayout>

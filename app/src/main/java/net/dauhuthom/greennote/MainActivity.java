@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         addControls();
         addEvents();
-        insertServiceSimple();
     }
 
     private void addControls() {
@@ -77,24 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void insertServiceSimple() {
-        serviceDBHelper = new ServiceDBHelper(this);
-        Cursor cursor = serviceDBHelper.getAll();
-        if (cursor.getCount() == 0) {
-            String[] serviceName = {
-                    "Ăn uống",
-                    "Xem phim",
-                    "Mua sắm",
-                    "Cafe"
-            };
-            for (int i = 0; i < serviceName.length; i++) {
-                ContentValues contentValues = new ContentValues();
-                serviceDBHelper = new ServiceDBHelper(this);
-                serviceDBHelper.insert(serviceName[i]);
-            }
-        }
     }
 
     @Override

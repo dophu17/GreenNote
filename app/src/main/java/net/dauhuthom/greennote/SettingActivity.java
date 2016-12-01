@@ -90,7 +90,7 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 }
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
                 startActivity(intent);
             }
         });

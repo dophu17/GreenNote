@@ -10,15 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.SettingActivity">
 
-    <Button
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="134dp"
-        android:background="@drawable/save"
-        android:id="@+id/btnSave" />
-
     <TextView
         android:text="Email:"
         android:layout_width="wrap_content"
@@ -27,6 +18,7 @@
         android:layout_alignBaseline="@+id/etEmail"
         android:layout_alignBottom="@+id/etEmail"
         android:layout_alignParentLeft="true"
+        android:layout_marginRight="20dp"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -46,16 +38,26 @@
         android:ems="10"
         android:id="@+id/etEmail"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView9"
         android:layout_toLeftOf="@+id/btnSendEmail"
-        android:layout_toStartOf="@+id/btnSendEmail" />
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9" />
+
+    <Button
+        android:text="Lưu"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:background="@color/colorNote2"
+        android:drawableStart="@android:drawable/ic_menu_save"
+        android:id="@+id/btnSave"
+        android:layout_below="@+id/textView10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp" />
 
     <TextView
-        android:text='(Use for send email infomation statistical). Click image "Email", will send all infomation last month. '
+        android:text='Sử dụng để gửi báo cáo thống kê vào địa chỉ email. Nhấn biểu tượng "email" để gửi báo cáo chi tiêu THÁNG VỪA RỒI.'
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView10"
-        android:layout_marginTop="14dp"
         android:layout_below="@+id/etEmail"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

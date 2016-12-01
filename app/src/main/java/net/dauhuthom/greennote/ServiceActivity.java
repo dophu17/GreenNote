@@ -1,8 +1,10 @@
 package net.dauhuthom.greennote;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +26,8 @@ public class ServiceActivity extends AppCompatActivity {
     ArrayList<Service> list;
     AdapterService adapter;
 
-    Button btnAddService, btnBack;
+    Button btnNote, btnStatistical, btnService, btnOther;
+    FloatingActionButton floatingActionButtonAdd;
     ListView lvService;
 
     @Override
@@ -35,32 +38,54 @@ public class ServiceActivity extends AppCompatActivity {
         addControls();
         addEvents();
         readData();
+        insertServiceSimple();
     }
 
     private void addControls() {
-        btnAddService = (Button) findViewById(R.id.btnAddService);
-        btnBack = (Button) findViewById(R.id.btnBack);
         lvService = (ListView) findViewById(R.id.lvService);
         list = new ArrayList<>();
         adapter = new AdapterService(this, list);
         lvService.setAdapter(adapter);
+        floatingActionButtonAdd = (FloatingActionButton) findViewById(R.id.floatingActionButtonAdd);
+        btnNote = (Button) findViewById(R.id.btnNote);
+        btnStatistical = (Button) findViewById(R.id.btnStatistical);
+        btnService = (Button) findViewById(R.id.btnService);
+        btnOther = (Button) findViewById(R.id.btnOther);
     }
 
     private void addEvents() {
         //add
-        btnAddService.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddServiceActivity.class);
                 startActivity(intent);
             }
         });
-
-        //back
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnStatistical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StatisticalActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        btnOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OtherActivity.class);
                 startActivity(intent);
             }
         });
@@ -86,5 +111,23 @@ public class ServiceActivity extends AppCompatActivity {
             list.add(new Service(id, name));
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private void insertServiceSimple() {
+        serviceDBHelper = new ServiceDBHelper(this);
+        Cursor cursor = serviceDBHelper.getAll();
+        if (cursor.getCount() == 0) {
+            String[] serviceName = {
+                    "Ăn uống",
+                    "Xem phim",
+                    "Mua sắm",
+                    "Cafe"
+            };
+            for (int i = 0; i < serviceName.length; i++) {
+                ContentValues contentValues = new ContentValues();
+                serviceDBHelper = new ServiceDBHelper(this);
+                serviceDBHelper.insert(serviceName[i]);
+            }
+        }
     }
 }

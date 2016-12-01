@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="colorBackground">#00ff00</color>
     <color name="colorWarning">#8B0000</color>
+
+    <!--color button center-->
+    <color name="colorNote2">#B375a417</color>
+    <color name="colorStatistical2">#B3cc0000</color>
+    <color name="colorService2">#B30099cc</color>
+    <color name="colorOthe2">#B3ffbb33</color>
+
+    <color name="colorNote2_press">#75a417</color>
+    <color name="colorStatistical2_press">#cc0000</color>
+    <color name="colorService2_press">#0099cc</color>
+    <color name="colorOthe2_press">#ffbb33</color>
 </resources>
