@@ -10,216 +10,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.dauhuthom.greennote.StatisticalActivity">
 
-    <TableLayout
+    <TextView
+        android:text="11-23-2016"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="14dp"
+        android:layout_gravity="right"
+        android:layout_column="1"
+        android:paddingTop="10dp"
+        android:id="@+id/tvChangeDate"
+        android:layout_alignBaseline="@+id/btnChangeDate"
+        android:layout_alignBottom="@+id/btnChangeDate"
+        android:layout_toLeftOf="@+id/btnChangeDate"
+        android:layout_toStartOf="@+id/btnChangeDate"
+        android:layout_marginEnd="14dp" />
+
+    <Button
+        android:layout_height="38dp"
+        android:background="@drawable/calendar"
+        android:id="@+id/btnChangeDate"
+        android:layout_gravity="right"
+        android:layout_column="1"
+        android:layout_width="38dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout">
+        android:layout_above="@+id/toolbar"
+        android:layout_marginTop="15dp"
+        android:fillViewport="true"
+        android:layout_below="@+id/btnChangeDate">
 
-        <TableRow
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right">
+            android:layout_height="match_parent">
 
             <TextView
-                android:text="11-23-2016"
-                android:layout_width="wrap_content"
+                android:text="Hôm nay"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="right"
-                android:layout_column="1"
+                android:id="@+id/textView6"
+                android:textAlignment="center"
                 android:paddingTop="10dp"
-                android:id="@+id/tvChangeDate" />
-
-            <Button
-                android:layout_height="38dp"
-                android:background="@drawable/calendar"
-                android:id="@+id/btnChangeDate"
-                android:layout_gravity="right"
-                android:layout_column="1"
-                android:layout_width="38dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-
-            <TextView
-                android:text="Ngày"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
                 android:textColor="#000"
-                android:id="@+id/textView16"
-                android:textAlignment="center" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+                android:background="@color/colorStatistical2" />
 
             <TextView
                 android:text="Hôm nay:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView12" />
-
-            <TextView
-                android:text="0 VND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:id="@+id/tvToday" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:text="Hôm qua:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView14" />
-
-            <TextView
-                android:text="0 VND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:id="@+id/tvYesterday" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <TextView
-                android:text="Tháng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
                 android:id="@+id/textView13"
-                android:textAlignment="center"
-                android:textColor="#000"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+                android:layout_below="@+id/textView6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
-                android:text="Tháng này:"
+                android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView23" />
+                android:id="@+id/tvToday"
+                android:layout_marginLeft="26dp"
+                android:layout_marginStart="26dp"
+                android:layout_alignBaseline="@+id/textView13"
+                android:layout_alignBottom="@+id/textView13"
+                android:layout_toRightOf="@+id/textView13"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart" />
 
-            <TextView
-                android:text="0 VND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:id="@+id/tvThisMonth" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:text="Tháng trước:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView24" />
-
-            <TextView
-                android:text="0 VND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:id="@+id/tvLastMonth" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorWarning"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <TextView
-                android:text="Nhận xét/Cảnh báo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView26"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:text="Ngày:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView27" />
-
-            <TextView
-                android:text="Good!"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:singleLine="false"
-                android:id="@+id/tvWarningDay" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:text="Tháng:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView29" />
-
-            <TextView
-                android:text="Good!"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:singleLine="false"
-                android:id="@+id/tvWarningMonth" />
-
-        </TableRow>
-
-    </TableLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -279,4 +144,5 @@
             android:background="@color/colorOthe2"
             android:textSize="10sp" />
     </LinearLayout>
+
 </RelativeLayout>

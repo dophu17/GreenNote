@@ -38,7 +38,6 @@ public class ServiceActivity extends AppCompatActivity {
         addControls();
         addEvents();
         readData();
-        insertServiceSimple();
     }
 
     private void addControls() {
@@ -111,23 +110,5 @@ public class ServiceActivity extends AppCompatActivity {
             list.add(new Service(id, name));
         }
         adapter.notifyDataSetChanged();
-    }
-
-    private void insertServiceSimple() {
-        serviceDBHelper = new ServiceDBHelper(this);
-        Cursor cursor = serviceDBHelper.getAll();
-        if (cursor.getCount() == 0) {
-            String[] serviceName = {
-                    "Ăn uống",
-                    "Xem phim",
-                    "Mua sắm",
-                    "Cafe"
-            };
-            for (int i = 0; i < serviceName.length; i++) {
-                ContentValues contentValues = new ContentValues();
-                serviceDBHelper = new ServiceDBHelper(this);
-                serviceDBHelper.insert(serviceName[i]);
-            }
-        }
     }
 }

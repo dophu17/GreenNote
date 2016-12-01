@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -28,7 +30,10 @@ public class StatisticalActivity extends AppCompatActivity {
     String currentDate = null;
     double totalToday = 0, totalYesterday = 0, totalThisMonth = 0, totalLastMonth = 0;
 
-    TextView tvToday, tvThisMonth, tvYesterday, tvLastMonth, tvChangeDate, tvWarningDay, tvWarningMonth;
+    //private PieChart mChart;
+
+
+    TextView tvChangeDate;//, tvToday, tvThisMonth, tvYesterday, tvLastMonth, tvWarningDay, tvWarningMonth;
     Button btnChangeDate, btnNote, btnStatistical, btnService, btnOther;
 
     @Override
@@ -39,16 +44,17 @@ public class StatisticalActivity extends AppCompatActivity {
         addControls();
         readData();
         addEvents();
+        drawChart();
     }
 
     private void addControls() {
-        tvToday = (TextView) findViewById(R.id.tvToday);
-        tvThisMonth = (TextView) findViewById(R.id.tvThisMonth);
-        tvYesterday = (TextView) findViewById(R.id.tvYesterday);
-        tvLastMonth = (TextView) findViewById(R.id.tvLastMonth);
-        tvWarningDay = (TextView) findViewById(R.id.tvWarningDay);
-        tvWarningMonth = (TextView) findViewById(R.id.tvWarningMonth);
-        tvChangeDate = (TextView) findViewById(R.id.tvChangeDate);
+//        tvToday = (TextView) findViewById(R.id.tvToday);
+//        tvThisMonth = (TextView) findViewById(R.id.tvThisMonth);
+//        tvYesterday = (TextView) findViewById(R.id.tvYesterday);
+//        tvLastMonth = (TextView) findViewById(R.id.tvLastMonth);
+//        tvWarningDay = (TextView) findViewById(R.id.tvWarningDay);
+//        tvWarningMonth = (TextView) findViewById(R.id.tvWarningMonth);
+//        tvChangeDate = (TextView) findViewById(R.id.tvChangeDate);
         btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
         btnNote = (Button) findViewById(R.id.btnNote);
         btnStatistical = (Button) findViewById(R.id.btnStatistical);
@@ -60,7 +66,7 @@ public class StatisticalActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = null;
         simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        tvChangeDate.setText(strDate);
+//        tvChangeDate.setText(strDate);
 
         //set current date for sql
         SimpleDateFormat simpleDateFormatCurrent = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -72,42 +78,42 @@ public class StatisticalActivity extends AppCompatActivity {
         //today
         Cursor cursor = noteDBHelper.getSumToday(currentDate);
         if (cursor.moveToFirst()) {
-            tvToday.setText(new Function().formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvToday.setText(new Function().formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalToday = cursor.getDouble(0);
         }
         //this month
         Cursor cursorThisMonth = noteDBHelper.getSumThisMonth(currentDate);
         if (cursorThisMonth.moveToFirst()) {
-            tvThisMonth.setText(new Function().formatDecimal(cursorThisMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvThisMonth.setText(new Function().formatDecimal(cursorThisMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalThisMonth = cursorThisMonth.getDouble(0);
         }
         //yesterday
         Cursor cursorYesterday = noteDBHelper.getSumYesterday(currentDate);
         if (cursorYesterday.moveToFirst()) {
-            tvYesterday.setText(new Function().formatDecimal(cursorYesterday.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvYesterday.setText(new Function().formatDecimal(cursorYesterday.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalYesterday = cursorYesterday.getDouble(0);
         }
         //last month
         Cursor cursorLastMonth = noteDBHelper.getSumLastMonth(currentDate);
         if (cursorLastMonth.moveToFirst()) {
-            tvLastMonth.setText(new Function().formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvLastMonth.setText(new Function().formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
             totalLastMonth = cursorLastMonth.getDouble(0);
         }
 
         //warning
         if (totalToday <= totalYesterday) {
-            tvWarningDay.setText("Great! Save than yesterday " + new Function().formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
+//            tvWarningDay.setText("Great! Save than yesterday " + new Function().formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
         } else {
-            tvWarningDay.setText("Bad! Waste than yesterday " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
+//            tvWarningDay.setText("Bad! Waste than yesterday " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
         }
         if (totalThisMonth <= totalLastMonth) {
-            tvWarningMonth.setText("Great! Save than last month " + new Function().formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
+//            tvWarningMonth.setText("Great! Save than last month " + new Function().formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
         } else {
-            tvWarningMonth.setText("Bad! Waste than last month " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
+//            tvWarningMonth.setText("Bad! Waste than last month " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
         }
     }
 
@@ -167,5 +173,12 @@ public class StatisticalActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void drawChart() {
+        RelativeLayout mainLayout;
+
+        float[] yData = {5, 10, 15, 30, 40};
+        String[] xData = {"Sony", "Xiaomi", "Sumsung", "LG", "Iphone"};
     }
 }

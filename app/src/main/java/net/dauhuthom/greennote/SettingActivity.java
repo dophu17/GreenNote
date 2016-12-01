@@ -142,7 +142,7 @@ public class SettingActivity extends AppCompatActivity {
 //                str += "<td>"  + new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND" + ") " + "</td>";
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("description")) + "</td>";
             } else {
-                tmp.add(cursor.getString(cursor.getColumnIndex("date")));
+                tmp.add(date);
                 str += "<br /><b>[" + date + "]</b><br />";
                 str += name + " (" + price + ") " + description + "<br />";
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("date")) + "</td>";

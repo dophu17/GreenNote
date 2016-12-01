@@ -1,5 +1,6 @@
 package net.dauhuthom.greennote;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,6 +41,7 @@ public class NoteActivity extends AppCompatActivity {
         addControls();
         addEvents();
         readData();
+        insertServiceSimple();
     }
 
     private void addControls() {
@@ -119,5 +121,23 @@ public class NoteActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
         tvTotal.setText(new Function().formatDecimal(total, "###,###,###,###,###", Locale.GERMANY) + " VND");
+    }
+
+    private void insertServiceSimple() {
+        serviceDBHelper = new ServiceDBHelper(this);
+        Cursor cursor = serviceDBHelper.getAll();
+        if (cursor.getCount() == 0) {
+            String[] serviceName = {
+                    "Ăn uống",
+                    "Xem phim",
+                    "Mua sắm",
+                    "Cafe"
+            };
+            for (int i = 0; i < serviceName.length; i++) {
+                ContentValues contentValues = new ContentValues();
+                serviceDBHelper = new ServiceDBHelper(this);
+                serviceDBHelper.insert(serviceName[i]);
+            }
+        }
     }
 }
