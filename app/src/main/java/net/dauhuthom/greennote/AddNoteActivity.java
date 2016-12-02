@@ -83,7 +83,7 @@ public class AddNoteActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = null;
         simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        etDate.setText(strDate);
+        etDate.setText(new Function().formatDate(strDate, "mm-dd-yyyy", "mm-dd-yyyy"));
     }
 
     private void addEvents() {
@@ -136,7 +136,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 //Hiển thị ra Dialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddNoteActivity.this,
                         onDateSetListener, year, month, day);
-                datePickerDialog.setTitle("Change date");
+                datePickerDialog.setTitle("Chọn ngày");
                 datePickerDialog.show();
             }
         });

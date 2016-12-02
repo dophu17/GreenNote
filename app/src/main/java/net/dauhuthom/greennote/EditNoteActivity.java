@@ -79,7 +79,7 @@ public class EditNoteActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = null;
         simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        etDate.setText(strDate);
+        etDate.setText(new Function().formatDate(strDate, "mm-dd-yyyy", "mm-dd-yyyy"));
     }
 
     private void initUI() {

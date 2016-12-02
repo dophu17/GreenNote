@@ -48,7 +48,7 @@
         <activity
             android:name=".SettingActivity"
             android:label="@string/setting_name" />
-        <activity android:name=".OtherActivity"></activity>
+        <activity android:name=".OtherActivity" />
     </application>
 
 </manifest>

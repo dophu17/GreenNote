@@ -56,19 +56,19 @@ public class NoteDBHelper extends DBhelper {
 
     public Cursor getAll() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME, null);
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " ORDER BY " + COLUMN_NOTE_ID + " ASC", null);
         return cursor;
     }
 
     public Cursor getAllJoin() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id", null);
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id" + " ORDER BY " + COLUMN_NOTE_ID + " ASC", null);
         return cursor;
     }
 
     public Cursor getAllJoinNow() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE notes.date = date('now', 'localtime')", null);
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE notes.date = date('now', 'localtime')" + " ORDER BY " + COLUMN_NOTE_ID + " ASC", null);
         return cursor;
     }
 
@@ -100,5 +100,12 @@ public class NoteDBHelper extends DBhelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days')", null);
         return cursor;
+    }
+
+    public double getSumTodayByService(String currentDate, int serviceID) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date = date('" + currentDate + "') AND " + COLUMN_NOTE_SERVICE_ID + " = " + serviceID + "", null);
+        cursor.moveToFirst();
+        return cursor.getDouble(0);
     }
 }

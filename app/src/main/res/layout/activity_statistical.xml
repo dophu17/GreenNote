@@ -42,6 +42,7 @@
         android:layout_above="@+id/toolbar"
         android:layout_marginTop="15dp"
         android:fillViewport="true"
+        android:scrollbars = "vertical"
         android:layout_below="@+id/btnChangeDate">
 
         <RelativeLayout
@@ -60,13 +61,14 @@
                 android:background="@color/colorStatistical2" />
 
             <TextView
-                android:text="Hôm nay:"
+                android:text="Hôm nay tiêu:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:id="@+id/textView13"
                 android:layout_below="@+id/textView6"
                 android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -74,14 +76,185 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvToday"
-                android:layout_marginLeft="26dp"
-                android:layout_marginStart="26dp"
                 android:layout_alignBaseline="@+id/textView13"
                 android:layout_alignBottom="@+id/textView13"
-                android:layout_toRightOf="@+id/textView13"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView13"
+                android:layout_toRightOf="@+id/textView13" />
+
+            <view
+                android:layout_width="wrap_content"
+                class="com.github.mikephil.charting.charts.PieChart"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/chartDay"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/textView13"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_height="230dp" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:id="@+id/textView14"
+                android:layout_below="@+id/textView8"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth"
+                android:layout_alignBaseline="@+id/textView14"
+                android:layout_alignBottom="@+id/textView14"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView14"
+                android:layout_toRightOf="@+id/textView14" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:id="@+id/textView15"
+                android:layout_below="@+id/textView14"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth2"
+                android:layout_alignBaseline="@+id/textView15"
+                android:layout_alignBottom="@+id/textView15"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView15"
+                android:layout_toRightOf="@+id/textView15" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:id="@+id/textView16"
+                android:layout_below="@+id/textView15"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth3"
+                android:layout_alignBaseline="@+id/textView16"
+                android:layout_alignBottom="@+id/textView16"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView16"
+                android:layout_toRightOf="@+id/textView16" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:id="@+id/textView17"
+                android:layout_below="@+id/textView16"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth4"
+                android:layout_alignBaseline="@+id/textView17"
+                android:layout_alignBottom="@+id/textView17"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView17"
+                android:layout_toRightOf="@+id/textView17" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:id="@+id/textView18"
+                android:layout_below="@+id/textView17"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth5"
+                android:layout_alignBaseline="@+id/textView18"
+                android:layout_alignBottom="@+id/textView18"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView18"
+                android:layout_toRightOf="@+id/textView18" />
+
+            <TextView
+                android:text="Tháng này tiêu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:id="@+id/textView19"
+                android:layout_below="@+id/textView18"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThisMonth6"
+                android:layout_alignBaseline="@+id/textView19"
+                android:layout_alignBottom="@+id/textView19"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textStart"
+                android:layout_toEndOf="@+id/textView19"
+                android:layout_toRightOf="@+id/textView19" />
+
+            <TextView
+                android:text="Tháng này"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#000"
+                android:background="@color/colorStatistical2"
+                android:layout_below="@+id/chartDay"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
     </ScrollView>

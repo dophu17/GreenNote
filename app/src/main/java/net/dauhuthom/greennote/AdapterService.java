@@ -69,14 +69,15 @@ public class AdapterService extends BaseAdapter {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
-                builder.setTitle("Delete");
-                builder.setMessage("Are you sure delete this service?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle("Xóa");
+                builder.setMessage("Bạn có chắc chắn muốn xóa danh mục chi tiêu này?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ServiceDBHelper serviceDBHelper = new ServiceDBHelper(context);
                         serviceDBHelper.delete(service.id);
 
+                        serviceDBHelper = new ServiceDBHelper(context);
                         Cursor cursor = serviceDBHelper.getAll();
                         list.clear();
                         while (cursor.moveToNext()) {
@@ -87,7 +88,7 @@ public class AdapterService extends BaseAdapter {
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();

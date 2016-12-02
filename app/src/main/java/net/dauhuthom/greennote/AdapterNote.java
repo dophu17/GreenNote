@@ -74,15 +74,16 @@ public class AdapterNote extends BaseAdapter {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
-                builder.setTitle("Delete");
-                builder.setMessage("Are you sure delete this note?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle("Xóa");
+                builder.setMessage("Bạn có chắc chắn muốn xóa chi tiêu này?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         NoteDBHelper noteDBHelper = new NoteDBHelper(context);
                         noteDBHelper.delete(note.id);
 
-                        Cursor cursor = noteDBHelper.getAllJoin();
+                        noteDBHelper = new NoteDBHelper(context);
+                        Cursor cursor = noteDBHelper.getAllJoinNow();
                         list.clear();
                         while (cursor.moveToNext()) {
                             int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -96,7 +97,7 @@ public class AdapterNote extends BaseAdapter {
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
