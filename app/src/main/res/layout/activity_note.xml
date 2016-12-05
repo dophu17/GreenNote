@@ -14,13 +14,14 @@
 
     <TextView
         android:text="TextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvDate"
         android:textColor="#000"
         android:layout_centerHorizontal="true"
         android:background="@android:color/background_light"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:text="Tổng tiền hôm nay:"
@@ -132,5 +133,28 @@
             android:background="@color/colorOthe2"
             android:textSize="10sp" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp"
+        android:id="@+id/btnPrevDate"
+        android:layout_toLeftOf="@+id/tvDate"
+        android:layout_toStartOf="@+id/tvDate"
+        android:background="@android:drawable/ic_media_previous"
+        android:layout_above="@+id/textView5"
+        android:layout_alignTop="@+id/btnNextDate" />
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/btnNextDate"
+        android:layout_alignBottom="@+id/tvDate"
+        android:layout_toRightOf="@+id/tvDate"
+        android:layout_toEndOf="@+id/tvDate"
+        android:background="@android:drawable/ic_media_next" />
 
 </RelativeLayout>

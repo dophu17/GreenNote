@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,12 +44,14 @@ public class EditServiceActivity extends AppCompatActivity {
         btnSaveService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = etServiceName.getText().toString();
-                serviceDBHelper = new ServiceDBHelper(getApplicationContext());
-                serviceDBHelper.update(id, name);
+                if (checkValidation()) {
+                    String name = etServiceName.getText().toString();
+                    serviceDBHelper = new ServiceDBHelper(getApplicationContext());
+                    serviceDBHelper.update(id, name);
 
-                Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), ServiceActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -56,5 +59,14 @@ public class EditServiceActivity extends AppCompatActivity {
     private void addControls() {
         etServiceName = (EditText) findViewById(R.id.etServiceName);
         btnSaveService = (Button) findViewById(R.id.btnSaveService);
+    }
+
+    private boolean checkValidation() {
+        if (TextUtils.isEmpty(etServiceName.getText().toString().trim())) {
+            etServiceName.setError("Vui lòng nhập tên danh mục chi tiêu!");
+            return false;
+        }
+
+        return true;
     }
 }

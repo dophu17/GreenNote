@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/etCost"
+        android:id="@+id/etPrice"
         android:inputType="number"
         android:layout_height="45dp"
         android:layout_alignLeft="@+id/spinnerServiceID"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:id="@+id/spinnerServiceID"
-        android:layout_below="@+id/etCost"
+        android:layout_below="@+id/etPrice"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignLeft="@+id/etDescription"
@@ -61,8 +61,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_alignBaseline="@+id/etCost"
-        android:layout_alignBottom="@+id/etCost"
+        android:layout_alignBaseline="@+id/etPrice"
+        android:layout_alignBottom="@+id/etPrice"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

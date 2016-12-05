@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +42,7 @@ public class AddNoteActivity extends AppCompatActivity {
     Calendar calendar;
     Date date;
 
-    EditText etCost, etDescription, etDate;
+    EditText etPrice, etDescription, etDate;
     Button btnSave, btnChangeDate;
     Spinner spinnerServiceID;
 
@@ -55,8 +56,8 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        etCost = (EditText) findViewById(R.id.etCost);
-        etCost.addTextChangedListener(new PriceTextWatcher(etCost));
+        etPrice = (EditText) findViewById(R.id.etPrice);
+        etPrice.addTextChangedListener(new PriceTextWatcher(etPrice));
         etDescription = (EditText) findViewById(R.id.etDescription);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
@@ -103,16 +104,21 @@ public class AddNoteActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String price = etCost.getText().toString();
-                price = price.replace(".", "");
-                int service_id = ServiceID;
-                String description = etDescription.getText().toString();
-                String changeDate = etDate.getText() + "";
-                noteDBHelper = new NoteDBHelper(getApplicationContext());
-                long id = noteDBHelper.insert(service_id, Double.parseDouble(price), new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd"), description);
+                if (checkValidation()) {
+                    String strPrice = etPrice.getText().toString();
+                    strPrice = strPrice.replace(".", "");
+                    double price = Double.parseDouble(strPrice);
+                    int service_id = ServiceID;
+                    String description = etDescription.getText().toString();
+                    String changeDate = etDate.getText() + "";
+                    changeDate = new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd");
 
-                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
-                startActivity(intent);
+                    noteDBHelper = new NoteDBHelper(getApplicationContext());
+                    long id = noteDBHelper.insert(service_id, price, changeDate, description);
+
+                    Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -140,6 +146,15 @@ public class AddNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    private boolean checkValidation() {
+        if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
+            etPrice.setError("Vui lòng nhập số tiền!");
+            return false;
+        }
+
+        return true;
     }
 }
 

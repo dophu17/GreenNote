@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,11 +28,12 @@ public class NoteActivity extends AppCompatActivity {
     AdapterNote adapter;
     Calendar calendar;
     Date date;
+    String currentDate;
 
     ListView lvNote;
     TextView tvDate, tvTotal;
     FloatingActionButton floatingActionButtonAdd;
-    Button btnNote, btnStatistical, btnService, btnOther;
+    Button btnNote, btnStatistical, btnService, btnOther, btnNextDate, btnPrevDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,16 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void addControls() {
+        //date current
+        calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = null;
+        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        String strDate = simpleDateFormat.format(calendar.getTime());
+        currentDate = new Function().formatDate(strDate, "mm-dd-yyyy", "yyyy-mm-dd");
+
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
-        adapter = new AdapterNote(this, list);
+        adapter = new AdapterNote(this, list, currentDate);
         lvNote.setAdapter(adapter);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvTotal = (TextView) findViewById(R.id.tvTotal);
@@ -56,12 +65,8 @@ public class NoteActivity extends AppCompatActivity {
         btnStatistical = (Button) findViewById(R.id.btnStatistical);
         btnService = (Button) findViewById(R.id.btnService);
         btnOther = (Button) findViewById(R.id.btnOther);
-
-        //date current
-        calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
-        String strDate = simpleDateFormat.format(calendar.getTime());
+        btnNextDate = (Button) findViewById(R.id.btnNextDate);
+        btnPrevDate = (Button) findViewById(R.id.btnPrevDate);
         tvDate.setText(strDate);
     }
 
@@ -100,16 +105,38 @@ public class NoteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnNextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar.add(Calendar.DATE, 1);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                tvDate.setText(simpleDateFormat.format(calendar.getTime()));
+                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), "mm-dd-yyyy", "yyyy-mm-dd");
+
+                readData();
+            }
+        });
+        btnPrevDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar.add(Calendar.DATE, -1);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                tvDate.setText(simpleDateFormat.format(calendar.getTime()));
+                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), "mm-dd-yyyy", "yyyy-mm-dd");
+
+                readData();
+            }
+        });
     }
 
     public void readData() {
         noteDBHelper = new NoteDBHelper(this);
-        Cursor cursor = noteDBHelper.getAllJoinNow();
+        Cursor cursor = noteDBHelper.getAllJoinByDate(currentDate);
 
         list.clear();
         Double total = 0.0;
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
             int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
             double price = cursor.getDouble(cursor.getColumnIndex("price"));
             String date = cursor.getString(cursor.getColumnIndex("date"));

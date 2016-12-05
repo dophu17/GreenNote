@@ -1,24 +1,18 @@
 package net.dauhuthom.greennote;
 
 import android.app.DatePickerDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +45,7 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        etPrice = (EditText) findViewById(R.id.etCost);
+        etPrice = (EditText) findViewById(R.id.etPrice);
         etPrice.addTextChangedListener(new PriceTextWatcher(etPrice));
         etDescription = (EditText) findViewById(R.id.etDescription);
         etDate = (EditText) findViewById(R.id.etDate);
@@ -126,16 +120,20 @@ public class EditNoteActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String price = etPrice.getText().toString();
-                price = price.replace(".", "");
-                double dPrice = Double.parseDouble(price);
-                String description = etDescription.getText().toString();
-                String changeDate = etDate.getText() + "";
-                noteDBHelper = new NoteDBHelper(getApplicationContext());
-                noteDBHelper.update(id, ServiceID, dPrice, new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd"), description);
+                if (checkValidation()) {
+                    String strPrice = etPrice.getText().toString();
+                    strPrice = strPrice.replace(".", "");
+                    double price = Double.parseDouble(strPrice);
+                    String description = etDescription.getText().toString();
+                    String changeDate = etDate.getText() + "";
+                    changeDate = new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd");
 
-                Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
-                startActivity(intent);
+                    noteDBHelper = new NoteDBHelper(getApplicationContext());
+                    noteDBHelper.update(id, ServiceID, price, changeDate, description);
+
+                    Intent intent = new Intent(getApplicationContext(), NoteActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -163,6 +161,15 @@ public class EditNoteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    private boolean checkValidation() {
+        if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
+            etPrice.setError("Vui lòng nhập số tiền!");
+            return false;
+        }
+
+        return true;
     }
 }
 

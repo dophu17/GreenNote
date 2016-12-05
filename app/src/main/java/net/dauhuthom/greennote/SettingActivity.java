@@ -45,18 +45,12 @@ public class SettingActivity extends AppCompatActivity {
         Cursor cursor = settingDBHelper.getAll();
         if (cursor.getCount() == 0) {
             String[] settingsKey = {
-                    "email",
-                    "autosend"
+                    "email"
             };
             for (int i = 0; i < settingsKey.length; i++) {
                 ContentValues contentValues = new ContentValues();
                 settingDBHelper = new SettingDBHelper(this);
-                if (settingsKey[i].equals("autosend")) {
-                    settingDBHelper.insert(settingsKey[i], "no", null, null);
-                } else {
-                    settingDBHelper.insert(settingsKey[i], null, null, null);
-                }
-
+                settingDBHelper.insert(settingsKey[i], null, null, null);
             }
         }
 //        settingDBHelper = new SettingDBHelper(this);

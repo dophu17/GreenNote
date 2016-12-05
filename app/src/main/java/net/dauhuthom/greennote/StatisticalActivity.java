@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
@@ -51,6 +52,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     ArrayList<String> tmpListServiceName = new ArrayList();
 
     TextView tvChangeDate, tvToday, tvThisMonth;//, tvYesterday, tvLastMonth, tvWarningDay, tvWarningMonth;
+    TextView tvPositionToday, tvPositionThisMonth;
     Button btnChangeDate, btnNote, btnStatistical, btnService, btnOther;
 
     @Override
@@ -63,9 +65,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         addEvents();
 
         getServiceForChart();
-        if (totalToday != 0) {
-            drawChart();
-        }
+        drawChart();
     }
 
     private void addControls() {
@@ -75,19 +75,22 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
 //        tvLastMonth = (TextView) findViewById(R.id.tvLastMonth);
 //        tvWarningDay = (TextView) findViewById(R.id.tvWarningDay);
 //        tvWarningMonth = (TextView) findViewById(R.id.tvWarningMonth);
-//        tvChangeDate = (TextView) findViewById(R.id.tvChangeDate);
+        tvChangeDate = (TextView) findViewById(R.id.tvChangeDate);
         btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
         btnNote = (Button) findViewById(R.id.btnNote);
         btnStatistical = (Button) findViewById(R.id.btnStatistical);
         btnService = (Button) findViewById(R.id.btnService);
         btnOther = (Button) findViewById(R.id.btnOther);
+        pieChartDay = (PieChart) findViewById(R.id.chartDay);
+        tvPositionToday = (TextView) findViewById(R.id.tvPositionToday);
+        tvPositionThisMonth = (TextView) findViewById(R.id.tvPositionThisMonth);
 
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
         simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-//        tvChangeDate.setText(strDate);
+        tvChangeDate.setText(strDate);
 
         //set current date for sql
         SimpleDateFormat simpleDateFormatCurrent = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -97,45 +100,39 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     public void readData() {
         noteDBHelper = new NoteDBHelper(this);
         //today
-        Cursor cursor = noteDBHelper.getSumToday(currentDate);
-        if (cursor.moveToFirst()) {
-            tvToday.setText(new Function().formatDecimal(cursor.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
-            totalToday = cursor.getDouble(0);
-        }
+        double sumToday = noteDBHelper.getSumToday(currentDate);
+        tvToday.setText(new Function().formatDecimal(sumToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+        totalToday = sumToday;
         //this month
-        Cursor cursorThisMonth = noteDBHelper.getSumThisMonth(currentDate);
-        if (cursorThisMonth.moveToFirst()) {
-            tvThisMonth.setText(new Function().formatDecimal(cursorThisMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
-            totalThisMonth = cursorThisMonth.getDouble(0);
-        }
+        double sumThisMonth = noteDBHelper.getSumThisMonth(currentDate);
+        tvThisMonth.setText(new Function().formatDecimal(sumThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+        totalThisMonth = sumThisMonth;
         //yesterday
-        Cursor cursorYesterday = noteDBHelper.getSumYesterday(currentDate);
-        if (cursorYesterday.moveToFirst()) {
-//            tvYesterday.setText(new Function().formatDecimal(cursorYesterday.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
-            totalYesterday = cursorYesterday.getDouble(0);
-        }
+//        double sumYesterday = noteDBHelper.getSumYesterday(currentDate);
+//        tvYesterday.setText(new Function().formatDecimal(sumYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//        totalYesterday = sumYesterday;
         //last month
-        Cursor cursorLastMonth = noteDBHelper.getSumLastMonth(currentDate);
-        if (cursorLastMonth.moveToFirst()) {
-//            tvLastMonth.setText(new Function().formatDecimal(cursorLastMonth.getDouble(0), "###,###,###,###,###", Locale.GERMANY) + " VND");
-            totalLastMonth = cursorLastMonth.getDouble(0);
-        }
+//        double sumLastMonth = noteDBHelper.getSumLastMonth(currentDate);
+//        if (cursorLastMonth.moveToFirst()) {
+//            tvLastMonth.setText(new Function().formatDecimal(sumLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
+//            totalLastMonth = sumLastMonth;
+//        }
 
         //warning
-        if (totalToday <= totalYesterday) {
+//        if (totalToday <= totalYesterday) {
 //            tvWarningDay.setText("Great! Save than yesterday " + new Function().formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
 //            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
-        } else {
+//        } else {
 //            tvWarningDay.setText("Bad! Waste than yesterday " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
 //            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
-        }
-        if (totalThisMonth <= totalLastMonth) {
+//        }
+//        if (totalThisMonth <= totalLastMonth) {
 //            tvWarningMonth.setText("Great! Save than last month " + new Function().formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
 //            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
-        } else {
+//        } else {
 //            tvWarningMonth.setText("Bad! Waste than last month " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
 //            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
-        }
+//        }
     }
 
     private void addEvents() {
@@ -146,12 +143,16 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         NumberFormat numberFormat = new DecimalFormat("00");
-                        tvChangeDate.setText((i1 + 1) + "-" + i2 + "-" + i);
+                        tvChangeDate.setText(numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2) + "-" + i);
                         calendar.set(i, i1, i2);
                         date = calendar.getTime();
 
                         currentDate = i + "-" + numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2);
                         readData();
+
+                        //refest chart
+                        getServiceForChart();
+                        drawChart();
                     }
                 };
                 String string = tvChangeDate.getText() + "";
@@ -211,11 +212,14 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     }
 
     private void drawChart() {
-        pieChartDay = (PieChart) findViewById(R.id.chartDay);
         //giá trị phần trăm
         pieChartDay.setUsePercentValues(true);
         //hiện mô tả phía dưới
-        pieChartDay.setDescription("Biểu đồ chi tiêu theo danh mục chi tiêu");
+        String nameChart = "Không thể vẽ biểu đồ. Hãy thêm ghi chú!";
+        if (totalToday > 0) {
+            nameChart = "Biểu đồ chi tiêu";
+        }
+        pieChartDay.setDescription(nameChart);
         //mChart.setExtraOffsets(5, 10, 5, 5);
 
         //mChart.setDragDecelerationFrictionCoef(5.95f);
@@ -279,7 +283,11 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
             xVals.add(tmpListServiceName.get(i));
         }
 
-        PieDataSet dataSet = new PieDataSet(yVals1, "(Màu tương ứng)");
+        String desChart = "";
+        if (totalToday > 0) {
+            desChart = "(Màu tương ứng)";
+        }
+        PieDataSet dataSet = new PieDataSet(yVals1, desChart);
         //khoảng cách giữa các phần bánh
         dataSet.setSliceSpace(3f);
         //khoảng cách to ra khi lick vào phần bánh
@@ -319,6 +327,8 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     private void getServiceForChart() {
         serviceDBHelper = new ServiceDBHelper(this);
         Cursor cursor = serviceDBHelper.getAll();
+        tmpListServiceID = new ArrayList<>();
+        tmpListServiceName = new ArrayList<>();
         while (cursor.moveToNext()) {
             int serviceID = cursor.getInt(cursor.getColumnIndex("id"));
             float valuePie = (float)noteDBHelper.getSumTodayByService(currentDate, serviceID);

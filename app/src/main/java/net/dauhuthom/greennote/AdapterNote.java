@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -27,10 +28,12 @@ public class AdapterNote extends BaseAdapter {
 
     Activity context;
     ArrayList<Note> list;
+    String currentDate;
 
-    public AdapterNote(Activity context, ArrayList<Note> list) {
+    public AdapterNote(Activity context, ArrayList<Note> list, String currentDate) {
         this.context = context;
         this.list = list;
+        this.currentDate = currentDate;
     }
 
     @Override
@@ -58,7 +61,12 @@ public class AdapterNote extends BaseAdapter {
         Button btnDelete = (Button) row.findViewById(R.id.btnDelete);
 
         final Note note = list.get(i);
-        tvName.setText(note.service_name);
+        String des = "";
+        String str = note.description;
+        if (str.length() > 0) {
+            des = " (" + str + ")";
+        }
+        tvName.setText(note.service_name + des);
         tvPrice.setText(new Function().formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +91,7 @@ public class AdapterNote extends BaseAdapter {
                         noteDBHelper.delete(note.id);
 
                         noteDBHelper = new NoteDBHelper(context);
-                        Cursor cursor = noteDBHelper.getAllJoinNow();
+                        Cursor cursor = noteDBHelper.getAllJoinByDate(currentDate);
                         list.clear();
                         while (cursor.moveToNext()) {
                             int id = cursor.getInt(cursor.getColumnIndex("id"));
