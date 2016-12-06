@@ -33,18 +33,16 @@ public class AboutActivity extends AppCompatActivity {
         PackageManager packageManager = context.getPackageManager();
         String packageName = context.getPackageName();
 
-        String versionName = "Version name: ";
-        String versionCode = "Version code: ";
+        String versionName = "Phiên bản: ";
 
         try {
             versionName += packageManager.getPackageInfo(packageName, 0).versionName;
-            versionCode += packageManager.getPackageInfo(packageName, 0).versionCode;
-            tvVersion.setText(versionName + " \n " + versionCode);
+            tvVersion.setText(versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        tvAuthor.setText("Author: Dau Hu Thom");
+        tvAuthor.setText("Tác giả: Đậu Hũ Thơm \n\nLiên hệ - góp ý: dophu17@gmail.com");
         tvWebsite.setText("Website: http://dauhuthom.net/");
         tvCopyright.setText("Copyright © 2016 Ho Chi Minh");
     }

@@ -70,7 +70,6 @@ public class AdapterNote extends BaseAdapter {
         }
         tvName.setText(note.service_name + des);
         tvPrice.setText(new Function().formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
-        tvTotal.setText(new Function().formatDecimal(getTotal(), "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
