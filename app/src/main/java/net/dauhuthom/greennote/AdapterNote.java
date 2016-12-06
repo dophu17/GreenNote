@@ -29,11 +29,13 @@ public class AdapterNote extends BaseAdapter {
     Activity context;
     ArrayList<Note> list;
     String currentDate;
+    TextView tvTotal;
 
-    public AdapterNote(Activity context, ArrayList<Note> list, String currentDate) {
+    public AdapterNote(Activity context, ArrayList<Note> list, String currentDate, TextView tvTotal) {
         this.context = context;
         this.list = list;
         this.currentDate = currentDate;
+        this.tvTotal = tvTotal;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class AdapterNote extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = layoutInflater.inflate(R.layout.lv_row_note, null);
+        final View row = layoutInflater.inflate(R.layout.lv_row_note, null);
         TextView tvName = (TextView) row.findViewById(R.id.tvName);
         TextView tvPrice = (TextView) row.findViewById(R.id.tvPrice);
         Button btnEdit = (Button) row.findViewById(R.id.btnEdit);
@@ -68,6 +70,7 @@ public class AdapterNote extends BaseAdapter {
         }
         tvName.setText(note.service_name + des);
         tvPrice.setText(new Function().formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
+        tvTotal.setText(new Function().formatDecimal(getTotal(), "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,7 @@ public class AdapterNote extends BaseAdapter {
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setTitle("Xóa");
@@ -103,6 +106,8 @@ public class AdapterNote extends BaseAdapter {
                             list.add(new Note(id, service_id, price, date, description, service_name));
                         }
                         notifyDataSetChanged();
+
+                        tvTotal.setText(new Function().formatDecimal(getTotal(), "###,###,###,###,###", Locale.GERMANY) + " VND");
                     }
                 });
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -116,5 +121,14 @@ public class AdapterNote extends BaseAdapter {
         });
 
         return row;
+    }
+
+    public double getTotal() {
+        Double total = 0.0;
+        for (int i = 0; i < list.size(); i++) {
+            total += list.get(i).price;
+        }
+
+        return total;
     }
 }

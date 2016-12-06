@@ -78,6 +78,12 @@ public class NoteDBHelper extends DBhelper {
         return cursor;
     }
 
+    public Cursor getAllJoinLastMonth() {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days')", null);
+        return cursor;
+    }
+
     public double getSumToday(String currentDate) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor =  sqLiteDatabase.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date = date('" + currentDate + "')", null);
@@ -113,9 +119,10 @@ public class NoteDBHelper extends DBhelper {
         return cursor.getDouble(0);
     }
 
-    public Cursor getAllJoinLastMonth() {
+    public double getSumThisMonthByService(String currentDate, int serviceID) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days')", null);
-        return cursor;
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT SUM(price) as total_price FROM notes WHERE date BETWEEN date('" + currentDate + "', 'start of month') AND date('" + currentDate + "', 'start of month' , '+1 month', '-1 days') AND " + COLUMN_NOTE_SERVICE_ID + " = " + serviceID + "", null);
+        cursor.moveToFirst();
+        return cursor.getDouble(0);
     }
 }

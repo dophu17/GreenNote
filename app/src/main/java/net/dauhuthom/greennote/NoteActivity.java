@@ -29,6 +29,7 @@ public class NoteActivity extends AppCompatActivity {
     Calendar calendar;
     Date date;
     String currentDate;
+    Double totalToday = 0.0;
 
     ListView lvNote;
     TextView tvDate, tvTotal;
@@ -56,10 +57,10 @@ public class NoteActivity extends AppCompatActivity {
 
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
-        adapter = new AdapterNote(this, list, currentDate);
+        tvTotal = (TextView) findViewById(R.id.tvTotal);
+        adapter = new AdapterNote(this, list, currentDate, tvTotal);
         lvNote.setAdapter(adapter);
         tvDate = (TextView) findViewById(R.id.tvDate);
-        tvTotal = (TextView) findViewById(R.id.tvTotal);
         floatingActionButtonAdd = (FloatingActionButton) findViewById(R.id.floatingActionButtonAdd);
         btnNote = (Button) findViewById(R.id.btnNote);
         btnStatistical = (Button) findViewById(R.id.btnStatistical);
@@ -134,7 +135,6 @@ public class NoteActivity extends AppCompatActivity {
         Cursor cursor = noteDBHelper.getAllJoinByDate(currentDate);
 
         list.clear();
-        Double total = 0.0;
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             int service_id = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -143,11 +143,12 @@ public class NoteActivity extends AppCompatActivity {
             String description = cursor.getString(cursor.getColumnIndex("description"));
             String service_name = cursor.getString(cursor.getColumnIndex("name"));
             list.add(new Note(id, service_id, price, date, description, service_name));
-
-            total = total + price;
         }
         adapter.notifyDataSetChanged();
-        tvTotal.setText(new Function().formatDecimal(total, "###,###,###,###,###", Locale.GERMANY) + " VND");
+
+        noteDBHelper = new NoteDBHelper(this);
+        totalToday = noteDBHelper.getSumToday(currentDate);
+        tvTotal.setText(new Function().formatDecimal(adapter.getTotal(), "###,###,###,###,###", Locale.GERMANY) + " VND");
     }
 
     private void insertServiceSimple() {
@@ -161,7 +162,6 @@ public class NoteActivity extends AppCompatActivity {
                     "Cafe"
             };
             for (int i = 0; i < serviceName.length; i++) {
-                ContentValues contentValues = new ContentValues();
                 serviceDBHelper = new ServiceDBHelper(this);
                 serviceDBHelper.insert(serviceName[i]);
             }

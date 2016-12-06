@@ -13,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -143,7 +145,8 @@ public class EditNoteActivity extends AppCompatActivity {
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        etDate.setText((i1 + 1) + "-" + i2 + "-" + i);
+                        NumberFormat numberFormat = new DecimalFormat("00");
+                        etDate.setText(numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2) + "-" + i);
                         calendar.set(i, i1, i2);
                         date = calendar.getTime();
                     }

@@ -47,11 +47,13 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     String currentDate = null;
     double totalToday = 0, totalYesterday = 0, totalThisMonth = 0, totalLastMonth = 0;
 
-    PieChart pieChartDay;
+    PieChart pieChartDay, pieCharMonth;
     ArrayList<Integer> tmpListServiceID = new ArrayList();
     ArrayList<String> tmpListServiceName = new ArrayList();
+    ArrayList<Integer> tmpListServiceIDMonth = new ArrayList();
+    ArrayList<String> tmpListServiceNameMonth = new ArrayList();
 
-    TextView tvChangeDate, tvToday, tvThisMonth;//, tvYesterday, tvLastMonth, tvWarningDay, tvWarningMonth;
+    TextView tvChangeDate, tvToday, tvThisMonth, tvWarning;//, tvYesterday, tvLastMonth, tvWarningDay, tvWarningMonth;
     TextView tvPositionToday, tvPositionThisMonth;
     Button btnChangeDate, btnNote, btnStatistical, btnService, btnOther;
 
@@ -66,6 +68,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
 
         getServiceForChart();
         drawChart();
+        drawChartMonth();
     }
 
     private void addControls() {
@@ -82,8 +85,10 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         btnService = (Button) findViewById(R.id.btnService);
         btnOther = (Button) findViewById(R.id.btnOther);
         pieChartDay = (PieChart) findViewById(R.id.chartDay);
+        pieCharMonth = (PieChart) findViewById(R.id.chartMonth);
         tvPositionToday = (TextView) findViewById(R.id.tvPositionToday);
         tvPositionThisMonth = (TextView) findViewById(R.id.tvPositionThisMonth);
+        tvWarning = (TextView) findViewById(R.id.tvWarning);
 
         //date current
         calendar = Calendar.getInstance();
@@ -100,39 +105,27 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     public void readData() {
         noteDBHelper = new NoteDBHelper(this);
         //today
-        double sumToday = noteDBHelper.getSumToday(currentDate);
-        tvToday.setText(new Function().formatDecimal(sumToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-        totalToday = sumToday;
+        totalToday = noteDBHelper.getSumToday(currentDate);
+        tvToday.setText(new Function().formatDecimal(totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
         //this month
-        double sumThisMonth = noteDBHelper.getSumThisMonth(currentDate);
-        tvThisMonth.setText(new Function().formatDecimal(sumThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-        totalThisMonth = sumThisMonth;
+        totalThisMonth = noteDBHelper.getSumThisMonth(currentDate);
+        tvThisMonth.setText(new Function().formatDecimal(totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
         //yesterday
-//        double sumYesterday = noteDBHelper.getSumYesterday(currentDate);
-//        tvYesterday.setText(new Function().formatDecimal(sumYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//        totalYesterday = sumYesterday;
+        totalYesterday = noteDBHelper.getSumYesterday(currentDate);
+//        tvYesterday.setText(new Function().formatDecimal(totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
         //last month
-//        double sumLastMonth = noteDBHelper.getSumLastMonth(currentDate);
-//        if (cursorLastMonth.moveToFirst()) {
-//            tvLastMonth.setText(new Function().formatDecimal(sumLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//            totalLastMonth = sumLastMonth;
-//        }
+        totalLastMonth = noteDBHelper.getSumLastMonth(currentDate);
+//        tvLastMonth.setText(new Function().formatDecimal(totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         //warning
-//        if (totalToday <= totalYesterday) {
-//            tvWarningDay.setText("Great! Save than yesterday " + new Function().formatDecimal(totalYesterday - totalToday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
-//        } else {
-//            tvWarningDay.setText("Bad! Waste than yesterday " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//            tvWarningDay.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
-//        }
-//        if (totalThisMonth <= totalLastMonth) {
-//            tvWarningMonth.setText("Great! Save than last month " + new Function().formatDecimal(totalLastMonth - totalThisMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorBackground));
-//        } else {
-//            tvWarningMonth.setText("Bad! Waste than last month " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND");
-//            tvWarningMonth.setTextColor(ContextCompat.getColor(this, R.color.colorWarning));
-//        }
+        String strWarning = "";
+        if (totalToday > totalYesterday) {
+            strWarning += "- Hôm nay bạn chi tiêu nhiều hơn hôm qua " + new Function().formatDecimal(totalToday - totalYesterday, "###,###,###,###,###", Locale.GERMANY) + " VND. HÃY TIẾT KIỆM!\n";
+        }
+        if (totalThisMonth > totalLastMonth) {
+            strWarning += "- Tháng này bạn chi tiêu nhiều hơn tháng trước " + new Function().formatDecimal(totalThisMonth - totalLastMonth, "###,###,###,###,###", Locale.GERMANY) + " VND. HÃY TIẾT KIỆM!";
+        }
+        tvWarning.setText(strWarning);
     }
 
     private void addEvents() {
@@ -153,6 +146,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
                         //refest chart
                         getServiceForChart();
                         drawChart();
+                        drawChartMonth();
                     }
                 };
                 String string = tvChangeDate.getText() + "";
@@ -204,6 +198,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         Log.i("VAL SELECTED",
                 "Value: " + entry.getVal() + ", xIndex: " + entry.getXIndex()
                         + ", DataSet index: " + i);
+        Toast.makeText(this, "Tỷ lệ: " + (double)Math.round(entry.getVal()*10)/10 + "%", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -217,7 +212,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         //hiện mô tả phía dưới
         String nameChart = "Không thể vẽ biểu đồ. Hãy thêm ghi chú!";
         if (totalToday > 0) {
-            nameChart = "Biểu đồ chi tiêu";
+            nameChart = "Biểu đồ chi tiêu (ngày)";
         }
         pieChartDay.setDescription(nameChart);
         //mChart.setExtraOffsets(5, 10, 5, 5);
@@ -256,6 +251,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     }
 
     private void setData(float range) {
+        noteDBHelper = new NoteDBHelper(this);
         //set giá trị của từng miếng bánh
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
@@ -284,9 +280,6 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         }
 
         String desChart = "";
-        if (totalToday > 0) {
-            desChart = "(Màu tương ứng)";
-        }
         PieDataSet dataSet = new PieDataSet(yVals1, desChart);
         //khoảng cách giữa các phần bánh
         dataSet.setSliceSpace(3f);
@@ -324,17 +317,147 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         pieChartDay.invalidate();
     }
 
+    private void drawChartMonth() {
+        //giá trị phần trăm
+        pieCharMonth.setUsePercentValues(true);
+        //hiện mô tả phía dưới
+        String nameChart = "Không thể vẽ biểu đồ. Hãy thêm ghi chú!";
+        if (totalThisMonth > 0) {
+            nameChart = "Biểu đồ chi tiêu (tháng)";
+        }
+        pieCharMonth.setDescription(nameChart);
+        //mChart.setExtraOffsets(5, 10, 5, 5);
+
+        //mChart.setDragDecelerationFrictionCoef(5.95f);
+
+        //cái lỗ chính giữa
+        pieCharMonth.setDrawHoleEnabled(false);
+        pieCharMonth.setHoleColor(Color.WHITE);
+        pieCharMonth.setTransparentCircleColor(Color.WHITE);
+        pieCharMonth.setTransparentCircleAlpha(110);
+        pieCharMonth.setHoleRadius(58f);
+        pieCharMonth.setTransparentCircleRadius(61f);
+
+        pieCharMonth.setDrawCenterText(false);
+
+        //góc quay
+        pieCharMonth.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        pieCharMonth.setRotationEnabled(true);
+        pieCharMonth.setHighlightPerTapEnabled(true);
+
+        // add a selection listener
+        pieCharMonth.setOnChartValueSelectedListener(this);
+
+        setDataMonth((float)totalThisMonth); //1: +1 phan tu; 100: 100%
+
+        pieCharMonth.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        //mChart.spin(2000, 0, 360);
+
+        Legend l = pieCharMonth.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+    }
+
+    private void setDataMonth(float range) {
+        noteDBHelper = new NoteDBHelper(this);
+        //set giá trị của từng miếng bánh
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        // IMPORTANT: In a PieChart, no values (Entry) should have the same
+        // xIndex (even if from different DataSets), since no values can be
+        // drawn above each other.
+
+//        for (int i = 0; i < count + 1; i++) {
+//            yVals1.add(new Entry((float) (3 * mult) + mult / 5, i));
+//        }
+
+        //Enty(giá trị phần bánh, vị trí index phần bánh)
+        for (int i = 0; i < tmpListServiceIDMonth.size(); i++) {
+            int serviceID = tmpListServiceIDMonth.get(i);
+            float valuePie = (float)noteDBHelper.getSumThisMonthByService(currentDate, serviceID);
+            float valuePiePercent = (valuePie * 100) / range;
+            if (valuePiePercent != 0) {
+                yVals1.add(new Entry(valuePiePercent, i));
+            }
+        }
+
+        //set tên của từng miếng bánh
+        //chỉ những service nào có total_price mới hiện ra
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < tmpListServiceNameMonth.size(); i++) {
+            xVals.add(tmpListServiceNameMonth.get(i));
+        }
+
+        String desChart = "";
+        PieDataSet dataSet = new PieDataSet(yVals1, desChart);
+        //khoảng cách giữa các phần bánh
+        dataSet.setSliceSpace(3f);
+        //khoảng cách to ra khi lick vào phần bánh
+        dataSet.setSelectionShift(5f);
+
+        // add a lot of colors
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+
+        dataSet.setColors(colors);
+        //dataSet.setSelectionShift(0f);
+
+        PieData data = new PieData(xVals, dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.BLACK);
+        //data.setValueTypeface(tf);
+        pieCharMonth.setData(data);
+
+        // undo all highlights
+        pieCharMonth.highlightValues(null);
+
+        pieCharMonth.invalidate();
+    }
+
     private void getServiceForChart() {
+        //day
         serviceDBHelper = new ServiceDBHelper(this);
-        Cursor cursor = serviceDBHelper.getAll();
+        noteDBHelper = new NoteDBHelper(this);
         tmpListServiceID = new ArrayList<>();
         tmpListServiceName = new ArrayList<>();
+        Cursor cursor = serviceDBHelper.getAll();
         while (cursor.moveToNext()) {
             int serviceID = cursor.getInt(cursor.getColumnIndex("id"));
+            //day
             float valuePie = (float)noteDBHelper.getSumTodayByService(currentDate, serviceID);
             if (valuePie > 0) {
                 tmpListServiceID.add(cursor.getInt(0));
                 tmpListServiceName.add(cursor.getString(cursor.getColumnIndex("name")));
+            }
+        }
+
+        //month
+        serviceDBHelper = new ServiceDBHelper(this);
+        noteDBHelper = new NoteDBHelper(this);
+        tmpListServiceIDMonth = new ArrayList<>();
+        tmpListServiceNameMonth = new ArrayList<>();
+        Cursor cursor2 = serviceDBHelper.getAll();
+        while (cursor2.moveToNext()) {
+            int serviceID = cursor2.getInt(cursor2.getColumnIndex("id"));
+            //month
+            float valuePieMonth = (float)noteDBHelper.getSumThisMonthByService(currentDate, serviceID);
+            if (valuePieMonth > 0) {
+                tmpListServiceIDMonth.add(cursor2.getInt(0));
+                tmpListServiceNameMonth.add(cursor2.getString(cursor2.getColumnIndex("name")));
             }
         }
     }
