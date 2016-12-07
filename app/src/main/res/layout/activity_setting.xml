@@ -39,8 +39,95 @@
         android:id="@+id/etEmail"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnSendEmail"
-        android:layout_toRightOf="@+id/textView9"
-        android:layout_toEndOf="@+id/textView9" />
+        android:layout_toEndOf="@+id/textView12"
+        android:layout_toRightOf="@+id/textView12" />
+
+    <TextView
+        android:text='(Sử dụng để gửi báo cáo thống kê vào địa chỉ email. Nhấn biểu tượng "email" để gửi báo cáo chi tiêu)'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView10"
+        android:layout_below="@+id/radioGroupMonth"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/etEmail"
+        android:paddingLeft="5dp"
+        android:layout_alignStart="@+id/etEmail" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/textView9"
+        android:layout_alignLeft="@+id/etEmail"
+        android:layout_alignStart="@+id/etEmail"
+        android:layout_marginTop="10dp"
+        android:id="@+id/radioGroupMonth">
+
+        <RadioButton
+            android:text="Tháng này"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioButtonLastMonth"
+            android:layout_alignLeft="@+id/textView10"
+            android:layout_alignStart="@+id/textView10"
+            android:id="@+id/radioButtonThisMonth"
+            android:duplicateParentState="false"
+            android:checked="true" />
+
+        <RadioButton
+            android:text="Tháng trước"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonLastMonth"
+            android:checked="false"
+            android:layout_below="@+id/etEmail"
+            android:layout_alignLeft="@+id/etEmail"
+            android:layout_alignStart="@+id/etEmail" />
+
+    </RadioGroup>
+
+    <TextView
+        android:text="Định dạng\nngày tháng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/textView12"
+        android:layout_below="@+id/textView10"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView12"
+        android:layout_toRightOf="@+id/textView12"
+        android:layout_toEndOf="@+id/textView12"
+        android:id="@+id/radioGroupDate">
+
+        <RadioButton
+            android:text="21-12-2016"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonddmmyyyy"
+            android:layout_weight="1"
+            android:checked="true" />
+
+        <RadioButton
+            android:text="12-21-2016"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonmmddyyyy"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="2016-12-21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonyyyymmdd"
+            android:layout_weight="1" />
+    </RadioGroup>
 
     <Button
         android:text="Lưu"
@@ -49,19 +136,8 @@
         android:background="@color/colorNote2"
         android:drawableStart="@android:drawable/ic_menu_save"
         android:id="@+id/btnSave"
-        android:layout_below="@+id/textView10"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text='Sử dụng để gửi báo cáo thống kê vào địa chỉ email. Nhấn biểu tượng "email" để gửi báo cáo chi tiêu THÁNG VỪA RỒI.'
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView10"
-        android:layout_below="@+id/etEmail"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/etEmail"
-        android:layout_alignStart="@+id/etEmail" />
 
 </RelativeLayout>

@@ -212,12 +212,16 @@ public class SliderActivity extends AppCompatActivity {
         if (cursor.getCount() == 0) {
             String[] settingsKey = {
                     "email",
-                    "first_run"
+                    "first_run",
+                    "format_date"
             };
             for (int i = 0; i < settingsKey.length; i++) {
                 String value = null;
                 if (settingsKey[i].equals("first_run")) {
                     value = "0";
+                }
+                if (settingsKey[i].equals("format_date")) {
+                    value = "ddmmyyyy";
                 }
                 settingDBHelper = new SettingDBHelper(this);
                 settingDBHelper.insert(settingsKey[i], value, null, null);
