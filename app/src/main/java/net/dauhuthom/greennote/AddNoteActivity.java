@@ -82,9 +82,9 @@ public class AddNoteActivity extends AppCompatActivity {
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        etDate.setText(new Function().formatDate(strDate, "mm-dd-yyyy", "mm-dd-yyyy"));
+        etDate.setText(new Function().formatDate(strDate, new Function().getDefaultFormatDate(getBaseContext())));
     }
 
     private void addEvents() {
@@ -111,7 +111,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     int service_id = ServiceID;
                     String description = etDescription.getText().toString();
                     String changeDate = etDate.getText() + "";
-                    changeDate = new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd");
+                    changeDate = new Function().formatDate(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
 
                     noteDBHelper = new NoteDBHelper(getApplicationContext());
                     long id = noteDBHelper.insert(service_id, price, changeDate, description);
@@ -128,18 +128,16 @@ public class AddNoteActivity extends AppCompatActivity {
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        NumberFormat numberFormat = new DecimalFormat("00");
-                        etDate.setText(numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2) + "-" + i);
+                        etDate.setText(new Function().formatFromyyyyMMdd(i + "-" + (i1 + 1) + "-" + i2, new Function().getDefaultFormatDate(getBaseContext())));
                         calendar.set(i, i1, i2);
                         date = calendar.getTime();
                     }
                 };
-                String string = etDate.getText() + "";
+                String date = etDate.getText() + "";
                 //Lấy ra chuỗi của textView Date
-                String strArrtmp[] = string.split("-");
-                int day = Integer.parseInt(strArrtmp[1]);
-                int month = Integer.parseInt(strArrtmp[0]) - 1;
-                int year = Integer.parseInt(strArrtmp[2]);
+                int day = new Function().getDay(date, new Function().getDefaultFormatDate(getBaseContext()));
+                int month = new Function().getMonth(date, new Function().getDefaultFormatDate(getBaseContext())) - 1;
+                int year = new Function().getYear(date, new Function().getDefaultFormatDate(getBaseContext()));
                 //Hiển thị ra Dialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddNoteActivity.this,
                         onDateSetListener, year, month, day);

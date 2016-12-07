@@ -75,7 +75,7 @@ public class EditNoteActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = null;
         simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        etDate.setText(new Function().formatDate(strDate, "mm-dd-yyyy", "mm-dd-yyyy"));
+        etDate.setText(new Function().formatDate(strDate, new Function().getDefaultFormatDate(getBaseContext())));
     }
 
     private void initUI() {
@@ -90,7 +90,7 @@ public class EditNoteActivity extends AppCompatActivity {
         String date = cursor.getString(cursor.getColumnIndex("date"));
         etPrice.setText(new Function().formatDecimal(price, "###,###,###,###,###", Locale.GERMANY));
         etDescription.setText(description);
-        etDate.setText(new Function().formatDate(date, "yyyy-mm-dd", "mm-dd-yyyy"));
+        etDate.setText(new Function().formatDate(date, new Function().getDefaultFormatDate(getBaseContext())));
 
         //get img_service
         int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -128,7 +128,7 @@ public class EditNoteActivity extends AppCompatActivity {
                     double price = Double.parseDouble(strPrice);
                     String description = etDescription.getText().toString();
                     String changeDate = etDate.getText() + "";
-                    changeDate = new Function().formatDate(changeDate, "mm-dd-yyyy", "yyyy-mm-dd");
+                    changeDate = new Function().formatDate(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
 
                     noteDBHelper = new NoteDBHelper(getApplicationContext());
                     noteDBHelper.update(id, ServiceID, price, changeDate, description);

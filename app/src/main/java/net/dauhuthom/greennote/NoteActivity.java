@@ -51,9 +51,9 @@ public class NoteActivity extends AppCompatActivity {
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        currentDate = new Function().formatDate(strDate, "mm-dd-yyyy", "yyyy-mm-dd");
+        currentDate = new Function().formatDate(strDate, new Function().getDefaultFormatDate(getBaseContext()));
 
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
@@ -68,7 +68,7 @@ public class NoteActivity extends AppCompatActivity {
         btnOther = (Button) findViewById(R.id.btnOther);
         btnNextDate = (Button) findViewById(R.id.btnNextDate);
         btnPrevDate = (Button) findViewById(R.id.btnPrevDate);
-        tvDate.setText(strDate);
+        tvDate.setText(currentDate);
     }
 
     private void addEvents() {
@@ -110,9 +110,9 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 calendar.add(Calendar.DATE, 1);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
                 tvDate.setText(simpleDateFormat.format(calendar.getTime()));
-                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), "mm-dd-yyyy", "yyyy-mm-dd");
+                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
 
                 readData();
             }
@@ -121,9 +121,9 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 calendar.add(Calendar.DATE, -1);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
                 tvDate.setText(simpleDateFormat.format(calendar.getTime()));
-                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), "mm-dd-yyyy", "yyyy-mm-dd");
+                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
 
                 readData();
             }

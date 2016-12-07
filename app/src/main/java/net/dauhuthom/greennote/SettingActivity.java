@@ -117,7 +117,6 @@ public class SettingActivity extends AppCompatActivity {
             }
             //format_date
             if (key.equals("format_date")) {
-                Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
                 if (value.equals("ddmmyyyy")) {
                     radioButtonddmmyyyy.setChecked(true);
                 } else if (value.equals("mmddyyyy")) {
@@ -147,7 +146,7 @@ public class SettingActivity extends AppCompatActivity {
         String str = "";
 //        String str = "<table border='1'>";
         while (cursor.moveToNext()) {
-            String date = new Function().formatDate(cursor.getString(cursor.getColumnIndex("date")), "yyyy-mm-dd", "mm-dd-yyyy");
+            String date = new Function().formatDate(cursor.getString(cursor.getColumnIndex("date")), new Function().getDefaultFormatDate(getBaseContext()));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String price = new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND";
             String description = cursor.getString(cursor.getColumnIndex("description"));
