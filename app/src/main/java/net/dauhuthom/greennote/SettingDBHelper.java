@@ -49,7 +49,8 @@ public class SettingDBHelper extends DBhelper {
 
 //    public Cursor getByKey(String key) {
 //        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-//        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_SETTING_NAME + " WHERE " + COLUMN_SETTING_KEY + " = " + key + "", null);
+//        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_SETTING_NAME + " WHERE " + COLUMN_SETTING_KEY + " = '" + key + "'", null);
+//        cursor.moveToFirst();
 //        return cursor;
 //    }
 

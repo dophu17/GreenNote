@@ -16,4 +16,9 @@
     <color name="colorStatistical2_press">#cc0000</color>
     <color name="colorService2_press">#0099cc</color>
     <color name="colorOthe2_press">#ffbb33</color>
+
+    <!--color background slider-->
+    <color name="colorBackgroundSlider1">#f64c73</color>
+    <color name="colorBackgroundSlider2">#20d2bc</color>
+    <color name="colorBackgroundSlider3">#c873f4</color>
 </resources>

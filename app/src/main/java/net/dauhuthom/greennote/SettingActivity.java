@@ -34,28 +34,9 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        insertSettingSimple();
         addControls();
         addEvents();
         initUI();
-    }
-
-    private void insertSettingSimple() {
-        settingDBHelper = new SettingDBHelper(this);
-        Cursor cursor = settingDBHelper.getAll();
-        if (cursor.getCount() == 0) {
-            String[] settingsKey = {
-                    "email"
-            };
-            for (int i = 0; i < settingsKey.length; i++) {
-                ContentValues contentValues = new ContentValues();
-                settingDBHelper = new SettingDBHelper(this);
-                settingDBHelper.insert(settingsKey[i], null, null, null);
-            }
-        }
-//        settingDBHelper = new SettingDBHelper(this);
-//        Cursor cursor1 = settingDBHelper.getAll();
-//        Toast.makeText(this, cursor1.getCount() + "", Toast.LENGTH_SHORT).show();
     }
 
     private void addControls() {
@@ -91,7 +72,6 @@ public class SettingActivity extends AppCompatActivity {
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //send email
                 sendEmail();
             }
         });

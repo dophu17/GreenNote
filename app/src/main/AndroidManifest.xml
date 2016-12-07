@@ -36,11 +36,6 @@
         <activity
             android:name=".NoteActivity"
             android:label="@string/note_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".AboutActivity"
@@ -50,7 +45,18 @@
             android:label="@string/setting_name" />
         <activity
             android:name=".OtherActivity"
-            android:label="@string/other_name"/>
+            android:label="@string/other_name" />
+        <activity
+            android:name=".SliderActivity"
+            android:label="@string/title_activity_slider"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
