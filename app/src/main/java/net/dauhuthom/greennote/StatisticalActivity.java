@@ -278,9 +278,9 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         String desChart = "";
         PieDataSet dataSet = new PieDataSet(yVals1, desChart);
         //khoảng cách giữa các phần bánh
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(1f);
         //khoảng cách to ra khi lick vào phần bánh
-        dataSet.setSelectionShift(5f);
+        dataSet.setSelectionShift(6f);
 
         // add a lot of colors
         ArrayList<Integer> colors = new ArrayList<Integer>();
@@ -389,9 +389,9 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         String desChart = "";
         PieDataSet dataSet = new PieDataSet(yVals1, desChart);
         //khoảng cách giữa các phần bánh
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(1f);
         //khoảng cách to ra khi lick vào phần bánh
-        dataSet.setSelectionShift(5f);
+        dataSet.setSelectionShift(6f);
 
         // add a lot of colors
         ArrayList<Integer> colors = new ArrayList<Integer>();

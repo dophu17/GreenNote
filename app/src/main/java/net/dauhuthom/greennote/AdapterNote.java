@@ -68,7 +68,7 @@ public class AdapterNote extends BaseAdapter {
         if (str.length() > 0) {
             des = " (" + str + ")";
         }
-        tvName.setText(note.service_name + des + " - " + note.date);
+        tvName.setText(note.service_name + des);
         tvPrice.setText(new Function().formatDecimal(note.price, "###,###,###,###,###", Locale.GERMANY) + " VND");
 
         btnEdit.setOnClickListener(new View.OnClickListener() {

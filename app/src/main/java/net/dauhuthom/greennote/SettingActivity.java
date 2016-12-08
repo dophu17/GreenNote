@@ -132,8 +132,9 @@ public class SettingActivity extends AppCompatActivity {
         //get data body email
         noteDBHelper = new NoteDBHelper(this);
         Cursor cursor;
-        cursor = noteDBHelper.getAllJoinNow();
+        cursor = noteDBHelper.getAllJoinThisMonth();
         String emailTo = etEmail.getText().toString();
+        Double total = 0.0;
 
         calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
@@ -146,7 +147,8 @@ public class SettingActivity extends AppCompatActivity {
         String str = "";
 //        String str = "<table border='1'>";
         while (cursor.moveToNext()) {
-            String date = new Function().formatDate(cursor.getString(cursor.getColumnIndex("date")), new Function().getDefaultFormatDate(getBaseContext()));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+//            Toast.makeText(this, date, Toast.LENGTH_SHORT).show();
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String price = new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND";
             String description = cursor.getString(cursor.getColumnIndex("description"));
@@ -162,16 +164,19 @@ public class SettingActivity extends AppCompatActivity {
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("description")) + "</td>";
             } else {
                 tmp.add(date);
-                str += "<br /><b>[" + date + "]</b><br />";
+                String dateShow = new Function().formatFromyyyyMMdd(date, new Function().getDefaultFormatDate(this));
+                str += "<br /><strong>[" + dateShow + "]</strong><br />";
                 str += name + " (" + price + ") " + description + "<br />";
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("date")) + "</td>";
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("name")) + "</td>";
 //                str += "<td>"  + new Function().formatDecimal(cursor.getDouble(cursor.getColumnIndex("price")), "###,###,###,###,###", Locale.GERMANY) + " VND" + ") " + "</td>";
 //                str += "<td>"  + cursor.getString(cursor.getColumnIndex("description")) + "</td>";
             }
+            total += cursor.getDouble(cursor.getColumnIndex("price"));
 //            str += "</tr>";
         }
 //        str += "</table>";
+        str += "<br /><br />Tổng tiền: " + new Function().formatDecimal(total, "###,###,###,###,###", Locale.GERMANY) + " VND";
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/html"); //text/plain -- message/rfc822 -- text/html
