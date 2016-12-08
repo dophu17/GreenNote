@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -73,7 +74,7 @@ public class EditNoteActivity extends AppCompatActivity {
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
         etDate.setText(new Function().formatDate(strDate, new Function().getDefaultFormatDate(getBaseContext())));
     }
@@ -90,7 +91,8 @@ public class EditNoteActivity extends AppCompatActivity {
         String date = cursor.getString(cursor.getColumnIndex("date"));
         etPrice.setText(new Function().formatDecimal(price, "###,###,###,###,###", Locale.GERMANY));
         etDescription.setText(description);
-        etDate.setText(new Function().formatDate(date, new Function().getDefaultFormatDate(getBaseContext())));
+        etDate.setText(new Function().formatFromyyyyMMdd(date, new Function().getDefaultFormatDate(getBaseContext())));
+//        etDate.setText(date);
 
         //get img_service
         int serviceIdNote = cursor.getInt(cursor.getColumnIndex("service_id"));
@@ -128,8 +130,7 @@ public class EditNoteActivity extends AppCompatActivity {
                     double price = Double.parseDouble(strPrice);
                     String description = etDescription.getText().toString();
                     String changeDate = etDate.getText() + "";
-                    changeDate = new Function().formatDate(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
-
+                    changeDate = new Function().formatToyyyyMMdd(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
                     noteDBHelper = new NoteDBHelper(getApplicationContext());
                     noteDBHelper.update(id, ServiceID, price, changeDate, description);
 
@@ -145,18 +146,16 @@ public class EditNoteActivity extends AppCompatActivity {
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        NumberFormat numberFormat = new DecimalFormat("00");
-                        etDate.setText(numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2) + "-" + i);
+                        etDate.setText(new Function().formatFromyyyyMMdd(i + "-" + (i1 + 1) + "-" + i2, new Function().getDefaultFormatDate(getBaseContext())));
                         calendar.set(i, i1, i2);
                         date = calendar.getTime();
                     }
                 };
                 String string = etDate.getText() + "";
                 //Lấy ra chuỗi của textView Date
-                String strArrtmp[] = string.split("-");
-                int day = Integer.parseInt(strArrtmp[1]);
-                int month = Integer.parseInt(strArrtmp[0]) - 1;
-                int year = Integer.parseInt(strArrtmp[2]);
+                int day = new Function().getDay(string, new Function().getDefaultFormatDate(getBaseContext()));
+                int month = new Function().getMonth(string, new Function().getDefaultFormatDate(getBaseContext())) - 1;
+                int year = new Function().getYear(string, new Function().getDefaultFormatDate(getBaseContext()));
                 //Hiển thị ra Dialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(EditNoteActivity.this,
                         onDateSetListener, year, month, day);

@@ -44,7 +44,7 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
     ServiceDBHelper serviceDBHelper;
     Calendar calendar;
     Date date;
-    String currentDate = null;
+    String currentDate = null, currentDateShow;
     double totalToday = 0, totalYesterday = 0, totalThisMonth = 0, totalLastMonth = 0;
 
     PieChart pieChartDay, pieCharMonth;
@@ -93,13 +93,11 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        tvChangeDate.setText(strDate);
-
-        //set current date for sql
-        SimpleDateFormat simpleDateFormatCurrent = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        currentDate = simpleDateFormatCurrent.format(calendar.getTime());
+        currentDate= strDate;
+        currentDateShow = new Function().formatFromyyyyMMdd(currentDate, new Function().getDefaultFormatDate(getBaseContext()));
+        tvChangeDate.setText(currentDateShow);
     }
 
     public void readData() {
@@ -135,12 +133,11 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        NumberFormat numberFormat = new DecimalFormat("00");
-                        tvChangeDate.setText(numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2) + "-" + i);
+                        tvChangeDate.setText(new Function().formatFromyyyyMMdd(i + "-" + (i1 + 1) + "-" + i2, new Function().getDefaultFormatDate(getBaseContext())));
                         calendar.set(i, i1, i2);
                         date = calendar.getTime();
 
-                        currentDate = i + "-" + numberFormat.format(i1 + 1) + "-" + numberFormat.format(i2);
+                        currentDate = new Function().formatToyyyyMMdd(tvChangeDate.getText().toString(), new Function().getDefaultFormatDate(getBaseContext()));
                         readData();
 
                         //refest chart
@@ -151,10 +148,9 @@ public class StatisticalActivity extends AppCompatActivity implements OnChartVal
                 };
                 String string = tvChangeDate.getText() + "";
                 //Lấy ra chuỗi của textView Date
-                String strArrtmp[] = string.split("-");
-                int day = Integer.parseInt(strArrtmp[1]);
-                int month = Integer.parseInt(strArrtmp[0]) - 1;
-                int year = Integer.parseInt(strArrtmp[2]);
+                int day = new Function().getDay(string, new Function().getDefaultFormatDate(getBaseContext()));
+                int month = new Function().getMonth(string, new Function().getDefaultFormatDate(getBaseContext())) - 1;
+                int year = new Function().getYear(string, new Function().getDefaultFormatDate(getBaseContext()));
                 //Hiển thị ra Dialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(StatisticalActivity.this,
                         onDateSetListener, year, month, day);

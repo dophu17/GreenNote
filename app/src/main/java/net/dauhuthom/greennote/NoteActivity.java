@@ -28,7 +28,7 @@ public class NoteActivity extends AppCompatActivity {
     AdapterNote adapter;
     Calendar calendar;
     Date date;
-    String currentDate;
+    String currentDate, currentDateShow;
     Double totalToday = 0.0;
 
     ListView lvNote;
@@ -51,9 +51,10 @@ public class NoteActivity extends AppCompatActivity {
         //date current
         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = null;
-        simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String strDate = simpleDateFormat.format(calendar.getTime());
-        currentDate = new Function().formatDate(strDate, new Function().getDefaultFormatDate(getBaseContext()));
+        currentDate = strDate;
+        currentDateShow = new Function().formatFromyyyyMMdd(currentDate, new Function().getDefaultFormatDate(getBaseContext()));
 
         lvNote = (ListView) findViewById(R.id.lvNote);
         list = new ArrayList<>();
@@ -68,7 +69,7 @@ public class NoteActivity extends AppCompatActivity {
         btnOther = (Button) findViewById(R.id.btnOther);
         btnNextDate = (Button) findViewById(R.id.btnNextDate);
         btnPrevDate = (Button) findViewById(R.id.btnPrevDate);
-        tvDate.setText(currentDate);
+        tvDate.setText(currentDateShow);
     }
 
     private void addEvents() {
@@ -112,7 +113,7 @@ public class NoteActivity extends AppCompatActivity {
                 calendar.add(Calendar.DATE, 1);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
                 tvDate.setText(simpleDateFormat.format(calendar.getTime()));
-                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
+                currentDate = new Function().formatToyyyyMMdd(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
 
                 readData();
             }
@@ -123,7 +124,7 @@ public class NoteActivity extends AppCompatActivity {
                 calendar.add(Calendar.DATE, -1);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(new Function().getDefaultFormatDate(getBaseContext()), Locale.getDefault());
                 tvDate.setText(simpleDateFormat.format(calendar.getTime()));
-                currentDate = new Function().formatDate(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
+                currentDate = new Function().formatToyyyyMMdd(simpleDateFormat.format(calendar.getTime()), new Function().getDefaultFormatDate(getBaseContext()));
 
                 readData();
             }

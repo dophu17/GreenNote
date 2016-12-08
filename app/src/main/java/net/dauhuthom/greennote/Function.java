@@ -154,4 +154,33 @@ public class Function {
 
         return output;
     }
+
+    public String formatToyyyyMMdd(String date, String returnType) {
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        String output = null;
+        NumberFormat numberFormat = new DecimalFormat("00");
+        String strArrtmp[] = date.split("-");
+
+        //input date
+        if (returnType == "yyyy-MM-dd") {
+            day = Integer.parseInt(strArrtmp[2]);
+            month = Integer.parseInt(strArrtmp[1]);
+            year = Integer.parseInt(strArrtmp[0]);
+        } else if (returnType == "MM-dd-yyyy") {
+            day = Integer.parseInt(strArrtmp[1]);
+            month = Integer.parseInt(strArrtmp[0]);
+            year = Integer.parseInt(strArrtmp[2]);
+        } else {
+            day = Integer.parseInt(strArrtmp[0]);
+            month = Integer.parseInt(strArrtmp[1]);
+            year = Integer.parseInt(strArrtmp[2]);
+        }
+
+        //output date
+        output = year + "-" + numberFormat.format(month) + "-" + numberFormat.format(day);
+
+        return output;
+    }
 }

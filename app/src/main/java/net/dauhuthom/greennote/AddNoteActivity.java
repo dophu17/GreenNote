@@ -111,7 +111,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     int service_id = ServiceID;
                     String description = etDescription.getText().toString();
                     String changeDate = etDate.getText() + "";
-                    changeDate = new Function().formatDate(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
+                    changeDate = new Function().formatToyyyyMMdd(changeDate, new Function().getDefaultFormatDate(getBaseContext()));
 
                     noteDBHelper = new NoteDBHelper(getApplicationContext());
                     long id = noteDBHelper.insert(service_id, price, changeDate, description);
@@ -133,11 +133,11 @@ public class AddNoteActivity extends AppCompatActivity {
                         date = calendar.getTime();
                     }
                 };
-                String date = etDate.getText() + "";
+                String string = etDate.getText() + "";
                 //Lấy ra chuỗi của textView Date
-                int day = new Function().getDay(date, new Function().getDefaultFormatDate(getBaseContext()));
-                int month = new Function().getMonth(date, new Function().getDefaultFormatDate(getBaseContext())) - 1;
-                int year = new Function().getYear(date, new Function().getDefaultFormatDate(getBaseContext()));
+                int day = new Function().getDay(string, new Function().getDefaultFormatDate(getBaseContext()));
+                int month = new Function().getMonth(string, new Function().getDefaultFormatDate(getBaseContext())) - 1;
+                int year = new Function().getYear(string, new Function().getDefaultFormatDate(getBaseContext()));
                 //Hiển thị ra Dialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddNoteActivity.this,
                         onDateSetListener, year, month, day);
