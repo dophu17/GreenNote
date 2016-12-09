@@ -1,18 +1,31 @@
 package net.dauhuthom.greennote;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +33,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+
 public class NoteActivity extends AppCompatActivity {
+
+    private static final int CONTENT_VIEW_ID = 10101010;
+    private static final String SHOWCASE_ID = "simple example";
 
     NoteDBHelper noteDBHelper;
     ServiceDBHelper serviceDBHelper;
@@ -45,6 +65,22 @@ public class NoteActivity extends AppCompatActivity {
         addEvents();
         readData();
         insertServiceSimple();
+
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.activity_note, new DebugExampleTwoFragment());
+//        ft.commit();
+
+    }
+
+
+    public static class DebugExampleTwoFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_note, container, false);
+
+            return view;
+        }
     }
 
     private void addControls() {

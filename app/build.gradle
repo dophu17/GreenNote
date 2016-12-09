@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/mpandroidchartlibrary-2-2-4.jar')
+    compile 'com.github.deano2390:MaterialShowcaseView:1.1.0'
+    compile 'com.github.amlcurran.showcaseview:library:5.4.3'
 }
