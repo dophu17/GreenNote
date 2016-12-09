@@ -80,13 +80,13 @@ public class NoteDBHelper extends DBhelper {
 
     public Cursor getAllJoinThisMonth() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month') AND date('now', 'start of month', '+1 month', '-1 days')", null);
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month') AND date('now', 'start of month', '+1 month', '-1 days') ORDER BY " + COLUMN_NOTE_DATE + " ASC", null);
         return cursor;
     }
 
     public Cursor getAllJoinLastMonth() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days')", null);
+        Cursor cursor =  sqLiteDatabase.rawQuery("SELECT notes.*, services.name as name FROM " + TABLE_NOTE_NAME + " LEFT JOIN " + TABLE_SERVICE_NAME + " ON notes.service_id = services.id WHERE date BETWEEN date('now', 'start of month', '-1 month') AND date('now', 'start of month', '-1 days') ORDER BY " + COLUMN_NOTE_DATE + " ASC", null);
         return cursor;
     }
 
