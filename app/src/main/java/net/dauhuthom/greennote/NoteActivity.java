@@ -39,9 +39,6 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class NoteActivity extends AppCompatActivity {
 
-    private static final int CONTENT_VIEW_ID = 10101010;
-    private static final String SHOWCASE_ID = "simple example";
-
     NoteDBHelper noteDBHelper;
     ServiceDBHelper serviceDBHelper;
     ArrayList<Note> list;
@@ -66,21 +63,6 @@ public class NoteActivity extends AppCompatActivity {
         readData();
         insertServiceSimple();
 
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.activity_note, new DebugExampleTwoFragment());
-//        ft.commit();
-
-    }
-
-
-    public static class DebugExampleTwoFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_note, container, false);
-
-            return view;
-        }
     }
 
     private void addControls() {
